@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>PrimeFaces</title>
+            </f:facet>
+        </h:head>
+
+        <h:body>
+
+            <p:layout fullPage="true">
+
+                <!--                <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
+                                    Header
+                                </p:layoutUnit>-->
+
+                <!--                <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
+                                    Footer
+                                </p:layoutUnit>-->
+
+                <!--                <p:layoutUnit position="west" size="175" header="Left" collapsible="true">
+                                    <p:menu>
+                                        <p:submenu label="Resources">
+                                            <p:menuitem value="Demo" url="http://www.primefaces.org/showcase-labs/ui/home.jsf" />
+                                            <p:menuitem value="Documentation" url="http://www.primefaces.org/documentation.html" />
+                                            <p:menuitem value="Forum" url="http://forum.primefaces.org/" />
+                                            <p:menuitem value="Themes" url="http://www.primefaces.org/themes.html" />
+                
+                                        </p:submenu>
+                
+                                    </p:menu>
+                                </p:layoutUnit>-->
+
+                <p:layoutUnit position="center">
+
+                    <h:form>
+                        <p:growl id="messages" showDetail="true" />
+                        <p:toolbar>
+                            <f:facet name="left">
+                                <p:commandButton type="button" value="New" icon="ui-icon-document" />
+
+                                <p:commandButton type="button" value="Open" icon="ui-icon-folder-open" />
+
+                                <span class="ui-separator">
+                                    <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                </span>
+
+                                <p:commandButton type="button" title="Save" icon="ui-icon-disk" />
+                                <p:commandButton type="button" title="Delete" icon="ui-icon-trash" />
+                                <p:commandButton type="button" title="Print" icon="ui-icon-print" />
+                            </f:facet>
+
+                            <f:facet name="right">
+                                <p:menuButton value="Options">
+                                    <p:menuitem value="Save" actionListener="#{toolbarView.save}" update="messages" icon="ui-icon-disk" />
+                                    <p:menuitem value="Update" actionListener="#{toolbarView.update}" update="messages" icon="ui-icon-arrowrefresh-1-w" />
+                                    <p:menuitem value="Delete" actionListener="#{toolbarView.delete}" ajax="false" icon="ui-icon-close" />
+                                    <p:menuitem value="Homepage" url="http://www.primefaces.org" icon="ui-icon-extlink" />
+                                </p:menuButton>
+                            </f:facet>
+
+                        </p:toolbar>
+
+
+                        <p:dataTable id="cars" var="car" value="#{dtColumnsView.cars}"  scrollable="true"  widgetVar="carsTable" filteredValue="#{dtColumnsView.filteredCars}" 
+                                     rows="15"   paginator="true"   paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     rowsPerPageTemplate="10,15,20,30,50">                    
+                            <p:columns value="#{dtColumnsView.columns}" var="column" columnIndexVar="colIndex" sortBy="#{car[column.property]}" filterBy="#{car[column.property]}">
+                                <f:facet name="header">
+                                    <h:outputText value="#{column.header}" />
+                                </f:facet>
+                                <h:outputText value="#{car[column.property]}" />
+                            </p:columns>
+                        </p:dataTable>
+                        <!--
+                                                <p:dataTable var="car" value="#{dtPaginatorView.cars}" rows="10"
+                                                             paginator="true"
+                                                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                             rowsPerPageTemplate="5,10,15">
+                                                    <p:column headerText="Id">
+                                                        <h:outputText value="#{car.id}" />
+                                                    </p:column>
+                        
+                                                    <p:column headerText="Year">
+                                                        <h:outputText value="#{car.year}" />
+                                                    </p:column>
+                        
+                                                    <p:column headerText="Brand">
+                                                        <h:outputText value="#{car.brand}" />
+                                                    </p:column>
+                        
+                                                    <p:column headerText="Color">
+                                                        <h:outputText value="#{car.color}" />
+                                                    </p:column>
+                                                </p:dataTable>-->
+                    </h:form>
+
+                </p:layoutUnit>
+
+            </p:layout>
+
+        </h:body>
+
+    </f:view>
+</html>
+
