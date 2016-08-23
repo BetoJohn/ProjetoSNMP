@@ -10,62 +10,50 @@
     <f:view contentType="text/html">
         <h:head>
             <f:facet name="first">
+                <link href="css/mycss.css" rel="stylesheet" type="text/css"/>
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
-                <title>PrimeFaces</title>
+                <title>PortMonitor</title>
             </f:facet>
+
         </h:head>
 
         <h:body>
 
             <p:layout fullPage="true">
 
-                <!--                <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
-                                    Header
-                                </p:layoutUnit>-->
-
-                <!--                <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
-                                    Footer
-                                </p:layoutUnit>-->
-
-                <!--                <p:layoutUnit position="west" size="175" header="Left" collapsible="true">
-                                    <p:menu>
-                                        <p:submenu label="Resources">
-                                            <p:menuitem value="Demo" url="http://www.primefaces.org/showcase-labs/ui/home.jsf" />
-                                            <p:menuitem value="Documentation" url="http://www.primefaces.org/documentation.html" />
-                                            <p:menuitem value="Forum" url="http://forum.primefaces.org/" />
-                                            <p:menuitem value="Themes" url="http://www.primefaces.org/themes.html" />
-                
-                                        </p:submenu>
-                
-                                    </p:menu>
-                                </p:layoutUnit>-->
-
                 <p:layoutUnit position="center">
 
+
                     <h:form>
-                        <p:growl id="messages" showDetail="true" />
+                        <p:growl id="messages" showDetail="true"  />
                         <p:toolbar>
                             <f:facet name="left">
-                                <p:commandButton type="button" value="New" icon="ui-icon-document" />
+                                <!--onclick="PF('dlg').show();"-->
 
-                                <p:commandButton type="button" value="Open" icon="ui-icon-folder-open" />
+                                <p:commandButton id="insertDevice" type="button" value="Novo Dispositivo" onclick="PF('dlg').show();" icon="ui-icon-document" />
 
                                 <span class="ui-separator">
                                     <span class="ui-icon ui-icon-grip-dotted-vertical" />
                                 </span>
 
-                                <p:commandButton type="button" title="Save" icon="ui-icon-disk" />
-                                <p:commandButton type="button" title="Delete" icon="ui-icon-trash" />
-                                <p:commandButton type="button" title="Print" icon="ui-icon-print" />
+                                <p:menuButton value="Alertas" styleClass="menuButton">
+                                    <p:menuitem value="> 20 dias" actionListener="#{toolbarView.save}" update="messages" />
+                                    <p:menuitem value="> 30 dias" actionListener="#{toolbarView.update}" update="messages"  />
+                                    <p:menuitem value="> 40 dias" actionListener="#{toolbarView.delete}" ajax="false"  />
+                                    <p:menuitem value="> 50 dias" actionListener="#{toolbarView.delete}" ajax="false"  />
+                                </p:menuButton>
+
+                                <!--                                <span class="ui-separator">
+                                                                    <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                                                </span>
+                                
+                                                                <p:commandButton type="button" styleClass="commandButton1" title="Save" icon="ui-icon-disk" />
+                                                                <p:commandButton type="button" title="Delete" icon="ui-icon-trash" />
+                                                                <p:commandButton type="button" title="Print" icon="ui-icon-print" />-->
                             </f:facet>
 
                             <f:facet name="right">
-                                <p:menuButton value="Options">
-                                    <p:menuitem value="Save" actionListener="#{toolbarView.save}" update="messages" icon="ui-icon-disk" />
-                                    <p:menuitem value="Update" actionListener="#{toolbarView.update}" update="messages" icon="ui-icon-arrowrefresh-1-w" />
-                                    <p:menuitem value="Delete" actionListener="#{toolbarView.delete}" ajax="false" icon="ui-icon-close" />
-                                    <p:menuitem value="Homepage" url="http://www.primefaces.org" icon="ui-icon-extlink" />
-                                </p:menuButton>
+
                             </f:facet>
 
                         </p:toolbar>
@@ -81,28 +69,49 @@
                                 <h:outputText value="#{car[column.property]}" />
                             </p:columns>
                         </p:dataTable>
-                        <!--
-                                                <p:dataTable var="car" value="#{dtPaginatorView.cars}" rows="10"
-                                                             paginator="true"
-                                                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                                             rowsPerPageTemplate="5,10,15">
-                                                    <p:column headerText="Id">
-                                                        <h:outputText value="#{car.id}" />
-                                                    </p:column>
-                        
-                                                    <p:column headerText="Year">
-                                                        <h:outputText value="#{car.year}" />
-                                                    </p:column>
-                        
-                                                    <p:column headerText="Brand">
-                                                        <h:outputText value="#{car.brand}" />
-                                                    </p:column>
-                        
-                                                    <p:column headerText="Color">
-                                                        <h:outputText value="#{car.color}" />
-                                                    </p:column>
-                                                </p:dataTable>-->
+
+
+                        <p:dialog header="Modal Dialog" widgetVar="dlg2" appendTo="@(body)"  resizable="false">
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <h:outputLabel for="username" value="Username:" />
+                                <p:inputText id="username" value="#{userLoginView.username}" required="true" label="username" />
+
+                                <h:outputLabel for="password" value="Password:" />
+                                <p:password id="password" value="#{userLoginView.password}" required="true" label="password" />
+
+                                <f:facet name="footer">
+                                    <p:commandButton value="Login" update="messages" actionListener="#{userLoginView.login}"
+                                                     oncomplete="handleLoginRequest(xhr, status, args)" />
+                                </f:facet>  
+                            </h:panelGrid>
+                        </p:dialog> 
+
+                        <p:dialog header="Login" widgetVar="dlg" focus="password"  resizable="false">
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <h:outputLabel for="username" value="Username:" />
+                                <p:inputText id="username" value="#{userLoginView.username}" required="true" label="username" />
+
+                                <h:outputLabel for="password" value="Password:" />
+                                <p:password id="password" value="#{userLoginView.password}" required="true" label="password" />
+
+                                <f:facet name="footer">
+                                    <p:commandButton value="Login" update="messages" actionListener="#{userLoginView.login}"
+                                                     oncomplete="handleLoginRequest(xhr, status, args)" />
+                                </f:facet>  
+                            </h:panelGrid>
+                        </p:dialog>
                     </h:form>
+
+                    <script type="text/javascript">
+                        function handleLoginRequest(xhr, status, args) {
+                            if (args.validationFailed || !args.loggedIn) {
+                                PF('dlg').jq.effect("shake", {times: 5}, 100);
+                            } else {
+                                PF('dlg').hide();
+                                $('#loginLink').fadeOut();
+                            }
+                        }
+                    </script>
 
                 </p:layoutUnit>
 

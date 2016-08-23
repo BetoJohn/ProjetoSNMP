@@ -3,31 +3,32 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package br.com.snmp.view;
 
 /**
  *
  * @author carlos.macedo
  */
 
+import br.com.snmp.service.MessageService;
 import javax.faces.bean.ManagedBean;
 
 @ManagedBean
 public class ToolbarView {
-    private Message msg;
+    private MessageService msg;
     public void save() {
-        msg = new Message();
-        msg.addMessage("Success", "Data saved");
+        msg = new MessageService();
+        msg.addMessage("Success", "Salvo", "Data saved");
     }
      
     public void update() {
-        msg = new Message();
-        msg.addMessage("Fatal", "Data updated");
+        msg = new MessageService();
+        msg.addMessage("Fatal", "Deletado","Data updated");
     }
      
     public void delete() {
-        msg = new Message();
-        msg.addMessage("Error", "Data deleted");
+        msg = new MessageService();
+        msg.addMessage("Error", "Conflito","Data deleted");
     }
      
    

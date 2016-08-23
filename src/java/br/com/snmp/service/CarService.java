@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package br.com.snmp.service;
 
 /**
  *
  * @author carlos.macedo
  */
+import br.com.snmp.model.Car;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

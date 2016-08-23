@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package br.com.snmp.service;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -12,23 +12,23 @@ import javax.faces.context.FacesContext;
  *
  * @author carlos.macedo
  */
-public class Message {
+public class MessageService {
 
-    public void addMessage(String status, String msg) {
+    public void addMessage(String type, String status, String msg) {
         FacesMessage.Severity facesMessage = null;
-        switch (status) {
-            case "Success":
+        switch (type.toUpperCase()) {
+            case "SUCCESS":
                 facesMessage = FacesMessage.SEVERITY_INFO;
-                return;
-            case "Error":
+                break;
+            case "ERROR":
                 facesMessage = FacesMessage.SEVERITY_ERROR;
-                return;
-            case "Warn":
+                break;
+            case "WARN":
                 facesMessage = FacesMessage.SEVERITY_WARN;
-                return;
-            case "Fatal":
+                break;
+            case "FATAL":
                 facesMessage = FacesMessage.SEVERITY_FATAL;
-                return;
+                break;
         }
 
         FacesMessage message = new FacesMessage(facesMessage, status, msg);
