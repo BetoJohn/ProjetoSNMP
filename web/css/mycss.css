@@ -7,11 +7,52 @@ and open the template in the editor.
     Created on : 23/08/2016, 12:03:31
     Author     : carlos.macedo
 */
-
+.newDevice{
+/*    height: 35px; 
+    width: 160px;*/
+}
+.alertaDevices{
+/*    height: 35px; */
+}
 .menuButton{
     margin-left: 10px;
-/*    background-color: #009900 !important*/
+    width: 160px;
+   }
+
+/*Altera a fonte do paginator*/
+.ui-paginator .ui-paginator-page, .ui-paginator .ui-paginator-pages, .ui-paginator .ui-paginator-next, .ui-paginator .ui-paginator-last, 
+.ui-paginator .ui-paginator-first, .ui-paginator .ui-paginator-prev, .ui-paginator .ui-paginator-current{
+     font-size: 80%;
 }
-form toolbar facet .commandButton1{
-    color: brown;
+/*Fontes do cabeçalho da tabela*/
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{
+    font-size: 80%;
 }
+.ui-datatable tbody td{
+    text-align: center;
+}
+.ui-paginator .ui-paginator-current, .ui-paginator .ui-paginator-rpp-options{
+    font-size: 70%;
+}
+
+.save{
+    height: 35px; 
+    width: 260px;
+    margin-bottom: 10px; 
+    horizontal-align:center; 
+    font-size: 50px
+}
+
+/*.ui-menubutton .menuButton .ui-button .ui-widget .ui-state-default .ui-corner-all .ui-button-text-icon-left {
+   background-color: #009900!important;  
+   background: #009900!important;
+   border: 1px solid #777777;
+   color: #E3E3E3;
+   font-weight: normal;
+}*/
+/*.ui-menubutton{
+    color: orange; * insert your background image *
+}*/
+/*.ui-button .ui-widget {
+    background: aquamarine;
+}*/

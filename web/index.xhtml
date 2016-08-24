@@ -12,7 +12,7 @@
             <f:facet name="first">
                 <link href="css/mycss.css" rel="stylesheet" type="text/css"/>
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
-                <title>PortMonitor</title>
+                <title>.::\_Port_Monitor_/::.</title>
             </f:facet>
 
         </h:head>
@@ -23,25 +23,36 @@
 
                 <p:layoutUnit position="center">
 
-
                     <h:form>
                         <p:growl id="messages" showDetail="true"  />
                         <p:toolbar>
                             <f:facet name="left">
                                 <!--onclick="PF('dlg').show();"-->
+                                <!--<p:commandButton id="insertDevice" type="button" value="Novo Dispositivo" onclick="PF('dlg').show();" icon="ui-icon-document" />-->
+                                <h:form id="form">
+                                    <p:commandButton styleClass="newDevice"  value="Novo Dispositivo" actionListener="#{dialogView.dialogView()}" icon="ui-icon-document" />
+                                </h:form>
 
-                                <p:commandButton id="insertDevice" type="button" value="Novo Dispositivo" onclick="PF('dlg').show();" icon="ui-icon-document" />
+                                <!--                                <p:commandButton type="button" value="Open" icon="ui-icon-folder-open" />-->
 
                                 <span class="ui-separator">
                                     <span class="ui-icon ui-icon-grip-dotted-vertical" />
                                 </span>
 
-                                <p:menuButton value="Alertas" styleClass="menuButton">
+<!--                                <p:menuButton value="Alertas" styleClass="menuButton">
+                                    <p:menuitem value="> 20 dias" update="messages" />
+                                    <p:menuitem value="> 30 dias"  update="messages"  />
+                                    <p:menuitem value="> 40 dias"  update="messages"   />
+                                    <p:menuitem value="> 50 dias"  update="messages"   />
+                                </p:menuButton>-->
+                                    
+                                    
+                                <p:splitButton styleClass="alertaDevices" value="Todos os Alertas" actionListener="#{buttonView.save}" update="messages" icon="ui-icon-folder-open">
                                     <p:menuitem value="> 20 dias" actionListener="#{toolbarView.save}" update="messages" />
                                     <p:menuitem value="> 30 dias" actionListener="#{toolbarView.update}" update="messages"  />
-                                    <p:menuitem value="> 40 dias" actionListener="#{toolbarView.delete}" ajax="false"  />
-                                    <p:menuitem value="> 50 dias" actionListener="#{toolbarView.delete}" ajax="false"  />
-                                </p:menuButton>
+                                    <p:menuitem value="> 40 dias" actionListener="#{toolbarView.delete}" update="messages"   />
+                                    <p:menuitem value="> 50 dias" actionListener="#{toolbarView.delete}" update="messages"   />
+                                </p:splitButton>
 
                                 <!--                                <span class="ui-separator">
                                                                     <span class="ui-icon ui-icon-grip-dotted-vertical" />
@@ -70,23 +81,9 @@
                             </p:columns>
                         </p:dataTable>
 
-
-                        <p:dialog header="Modal Dialog" widgetVar="dlg2" appendTo="@(body)"  resizable="false">
-                            <h:panelGrid columns="2" cellpadding="5">
-                                <h:outputLabel for="username" value="Username:" />
-                                <p:inputText id="username" value="#{userLoginView.username}" required="true" label="username" />
-
-                                <h:outputLabel for="password" value="Password:" />
-                                <p:password id="password" value="#{userLoginView.password}" required="true" label="password" />
-
-                                <f:facet name="footer">
-                                    <p:commandButton value="Login" update="messages" actionListener="#{userLoginView.login}"
-                                                     oncomplete="handleLoginRequest(xhr, status, args)" />
-                                </f:facet>  
-                            </h:panelGrid>
-                        </p:dialog> 
-
+                        <!--appendTo="@(body)"-->
                         <p:dialog header="Login" widgetVar="dlg" focus="password"  resizable="false">
+
                             <h:panelGrid columns="2" cellpadding="5">
                                 <h:outputLabel for="username" value="Username:" />
                                 <p:inputText id="username" value="#{userLoginView.username}" required="true" label="username" />
@@ -99,9 +96,10 @@
                                                      oncomplete="handleLoginRequest(xhr, status, args)" />
                                 </f:facet>  
                             </h:panelGrid>
-                        </p:dialog>
-                    </h:form>
 
+                        </p:dialog>
+
+                    </h:form>
                     <script type="text/javascript">
                         function handleLoginRequest(xhr, status, args) {
                             if (args.validationFailed || !args.loggedIn) {
@@ -111,6 +109,7 @@
                                 $('#loginLink').fadeOut();
                             }
                         }
+
                     </script>
 
                 </p:layoutUnit>

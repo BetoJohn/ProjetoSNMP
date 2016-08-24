@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Cadastro Dispositivo</title>
+        <script name="jquery/jquery.js" library="primefaces"></script>
+        <link href="css/mycss.css" rel="stylesheet" type="text/css"/>
+        <style type="text/css">
+            /*            .ui-widget {
+                            font-size: 90%;                
+                        }*/
+            /*             .ui-button {
+                            height:40px;
+                        }*/
+            .centralizar {text-align: center;}
+        </style>
+    </h:head>
+
+    <h:body >
+
+        <h:form id="form" >
+            <h:panelGrid columns="2" cellpadding="5" >
+
+
+                <h:outputLabel for="idDevice" value="Identificação:" />
+                <h:panelGrid columns="1"  >
+                    <p:inputText id="idDevice" value="" required="true" label="Device" size="35"/>
+                    <p:message for="idDevice" />
+                </h:panelGrid>
+
+                <h:outputLabel for="version" value="Versão:" />
+                <h:panelGrid columns="1"  >
+                    <p:inputText id="version" value="" required="true" label="Versão" size="35"/>
+                    <p:message for="version" />
+                </h:panelGrid>
+
+                <p:outputLabel value="OID:" for="dd" />
+                <h:panelGrid columns="1"  >
+                    <h:panelGrid columns="2"  >
+                        <p:commandButton  icon="ui-icon-document" value="Novo" />
+                        <p:autoComplete  id="dd" dropdown="true" value="#{autoCompleteView.txt6}" required="true" completeMethod="#{autoCompleteView.completeText}" />
+                    </h:panelGrid>
+                    <p:message for="dd" />
+                </h:panelGrid>
+
+
+                <h:outputLabel for="oidini" value="Porta Inicial:" />
+                <h:panelGrid columns="1"  >
+                    <p:inputText id="oidini" value="" required="true" label="Porta Inicial" size="35"/>
+                    <p:message for="oidini" />
+                </h:panelGrid>
+
+
+                <h:outputLabel for="oidfinal" value="Porta Final:" />
+                <h:panelGrid columns="1"  >
+                    <p:inputText id="oidfinal" value="" required="true" label="Porta Final" size="35"/>
+                    <p:message for="oidfinal" />
+                </h:panelGrid>
+
+                <h:outputLabel for="comunidade" value="Comunidade:" />
+                <h:panelGrid columns="1"  >
+                    <p:inputText id="comunidade" value="" required="true" label="Comunidade" size="35"/>
+                    <p:message for="comunidade" />
+                </h:panelGrid>
+
+                <h:outputLabel for="ip" value="IP:" />
+                <h:panelGrid columns="1"  >
+                    <p:inputText id="ip" value="" required="true" label="IP" size="35"/>
+                    <p:message for="ip" />
+                </h:panelGrid>
+                
+                <f:facet name="footer" >
+                    <!--<p:commandButton  icon="ui-icon-disk" value="Salvar" styleClass="save" onclick="#{deviceBean.teste()}"/>-->
+                </f:facet>  
+            </h:panelGrid>
+            <div align="center" >
+                <p:commandButton  icon="ui-icon-disk" value="Salvar" styleClass="save" ajax = "false" actionListener="#{device.teste()}"/>
+
+            </div>
+        </h:form>
+
+    </h:body>
+
+</html>
