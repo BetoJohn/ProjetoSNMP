@@ -10,7 +10,7 @@
     <f:view contentType="text/html">
         <h:head>
             <f:facet name="first">
-                <link href="css/mycss.css" rel="stylesheet" type="text/css"/>
+                <link href="res/mycss.css" rel="stylesheet" type="text/css"/>
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
                 <title>.::\_Port_Monitor_/::.</title>
             </f:facet>
@@ -86,10 +86,10 @@
                         <p:panel header="Create a new Device" style="margin-bottom:20px">
                             <h:panelGrid columns="2" cellpadding="5">
                                 <h:outputLabel value="Identificação : *" for="txt_title"></h:outputLabel>
-                                <p:inputText id="txt_title" value="#{deviceBean.identificacao}" required="true"/>
+                                <p:inputText id="txt_title" value="#{deviceBean.device.identificacao}" required="true"/>
 
                                 <h:outputLabel value="Versão : *" for="txt_author"></h:outputLabel>
-                                <p:inputText id="txt_author" value="#{deviceBean.versao}" required="true"/>
+                                <p:inputText id="txt_author" value="#{deviceBean.device.versao}" required="true"/>
 
                                 <p:commandButton id="btn_reset" value="Reset" type="reset"/>
                                 <p:commandButton id="btn_add" value="Add" action="#{deviceBean.createNew}" >

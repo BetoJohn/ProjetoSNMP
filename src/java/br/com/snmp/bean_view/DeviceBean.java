@@ -7,6 +7,7 @@ package br.com.snmp.bean_view;
 
 import br.com.snmp.model.Device;
 import br.com.snmp.model.OID;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -14,6 +15,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.validation.constraints.Min;
 import org.primefaces.context.RequestContext;
 
 /**
@@ -21,26 +23,25 @@ import org.primefaces.context.RequestContext;
  * @author carlos.macedo
  */
 @ManagedBean
-public class DeviceBean {
-
-    private String identificacao;
-    private String versao;
-    private OID oid;
-    private String comunidade;
-    private String ip;
+public class DeviceBean implements Serializable {
 
     private Device device;
+    private OID oid;
     private List<Device> listDevices;
 
     @PostConstruct
     public void init() {
         device = new Device();
+        oid = new OID();
+        device.setOid(oid);        
         listDevices = new ArrayList<Device>();
     }
 
     public void createNew(ActionEvent event) {
-        device.setIdentificacao(identificacao);
-        device.setVersao(versao);
+        
+        
+        System.out.println(device.toString());
+       
 //        device.setComunidade(comunidade);
 //        device.setIp(ip);
 //        device.setOid(oid);
@@ -55,9 +56,15 @@ public class DeviceBean {
 
 //        }
     }
+    
+    public void createNewOID(ActionEvent event){
+        System.out.println(device.toString());
+    }
 
     public String reinit() {
         device = new Device();
+        oid = new OID();
+        device.setOid(oid);
         return null;
     }
 
@@ -65,52 +72,14 @@ public class DeviceBean {
         return listDevices;
     }
 
-    public String getIdentificacao() {
-        return identificacao;
-    }
 
-    public void setIdentificacao(String identificacao) {
-        this.identificacao = identificacao;
-    }
-
-    public String getVersao() {
-        return versao;
-    }
-
-    public void setVersao(String versao) {
-        this.versao = versao;
+    public Device getDevice() {
+        return device;
     }
 
     public OID getOid() {
         return oid;
     }
 
-    public void setOid(OID oid) {
-        this.oid = oid;
-    }
-
-    public String getComunidade() {
-        return comunidade;
-    }
-
-    public void setComunidade(String comunidade) {
-        this.comunidade = comunidade;
-    }
-
-    public String getIp() {
-        return ip;
-    }
-
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
-
-    public Device getDevice() {
-        return device;
-    }
-
-    public void setDevice(Device device) {
-        this.device = device;
-    }
-
+    
 }

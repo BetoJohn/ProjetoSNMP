@@ -38,7 +38,7 @@ public class DialogFrameworkView {
         options.put("resizable", false);
         options.put("modal", true);
         options.put("responsive", true);
-        RequestContext.getCurrentInstance().openDialog("testeDialog", options, null);
+        RequestContext.getCurrentInstance().openDialog("dialogCadastroDevice", options, null);
     }
 
     public String getIdentificacao() {

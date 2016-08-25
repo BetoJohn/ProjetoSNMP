@@ -5,11 +5,13 @@
  */
 package br.com.snmp.model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author carlos.macedo
  */
-public class Device {
+public class Device implements Serializable{
     private String identificacao;
     private String versao;
     private OID oid;
@@ -55,6 +57,12 @@ public class Device {
     public void setIp(String ip) {
         this.ip = ip;
     }
+
+    @Override
+    public String toString() {
+        return "Indentificação: "+identificacao+" | Versão: "+versao+" | Comunidade: "+comunidade+" | IP: "+ip+" | OID Descrição: "+oid.getDescricao(); 
+    }
+    
     
     
 }

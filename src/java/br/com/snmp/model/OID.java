@@ -37,6 +37,11 @@ public class OID {
     public void setPortFinal(int portFinal) {
         this.portFinal = portFinal;
     }
+
+    @Override
+    public String toString() {
+        return "Descrição: "+descricao; //To change body of generated methods, choose Tools | Templates.
+    }
     
     
     

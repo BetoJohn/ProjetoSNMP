@@ -14,7 +14,7 @@ and open the template in the editor.
     <h:head>
         <!--        <title>Cadastro Dispositivo</title>-->
         <script name="jquery/jquery.js" library="primefaces"></script>
-        <link href="css/mycss.css" rel="stylesheet" type="text/css"/>
+        <link href="res/mycss.css" rel="stylesheet" type="text/css"/>
         <style type="text/css">
             /*            .ui-widget {
                             font-size: 90%;                
@@ -28,15 +28,17 @@ and open the template in the editor.
 
     <h:body >
         <p:panel header="Cadastro Dispositivo" style="margin-bottom:20px">
-            <h:form id="formCadastro" >
-                <p:growl id="msgs" />
+            <h:form id="formCadastro" prependId="false" >
+                <!--                <p:growl id="msgs" />-->
                 <h:panelGrid columns="2" cellpadding="5" >
 
 
                     <h:outputLabel for="idDevice" value="Identificação:" />
                     <h:panelGrid columns="1"  >
                         <p:inputText id="idDevice" value="#{deviceBean.device.identificacao}" required="true" label="Device" size="37"/>
-                        <p:message for="idDevice" />
+                        <div style="font-size: 50%">
+                            <p:message for="idDevice" />
+                        </div>
                     </h:panelGrid>
 
                     <h:outputLabel for="version" value="Versão:" />
@@ -48,23 +50,42 @@ and open the template in the editor.
                     <p:outputLabel value="OID:" for="dd" />
                     <h:panelGrid columns="1"  >
                         <h:panelGrid columns="2"  >
-                            <p:commandButton  icon="ui-icon-document" value="Novo" />
-                            <p:autoComplete  id="dd" dropdown="true" value="#{deviceBean.device.oid.descricao}" required="true" completeMethod="#{autoCompleteView.completeText}" />
+                            <h:form id="formInsertIdentOID">
+                                <p:commandButton id="insertOID" icon="ui-icon-document" value="Novo" />
+                                <p:overlayPanel  id="insertPanel" for="insertOID" hideEffect="fade" dynamic="true" style="width:400px; height: 120px">
+                                    <div align="center">
+                                        <h:outputLabel value="Cadastro de OID" />
+                                    </div>
+                                    <h:panelGrid columns="2" cellpadding="5" style="margin-top: 10px">
+
+                                        <h:outputLabel for="idDevice" value="Identificação:" />
+                                        <p:inputText id="idDevice" value="#{deviceBean.device.oid.descricao}" required="true" label="idDevice" />
+
+                                        <f:facet name="footer">
+
+                                        </f:facet>  
+                                    </h:panelGrid>
+                                    <div align="center" class="divBtnOk">
+                                        <p:commandButton  icon="ui-icon-check"  value="Ok" styleClass="btnOkIdent" ajax = "false"  actionListener="#{deviceOIDBean.createNewOID}" action="#{deviceOIDBean.reinit}"/>
+                                    </div>
+                                </p:overlayPanel>
+                            </h:form>
+
+                            <p:autoComplete  id="dd" dropdown="true" value="#{deviceBean.oid.descricao}" required="true" completeMethod="#{autoCompleteView.completeText}" />
                         </h:panelGrid>
                         <p:message for="dd" />
                     </h:panelGrid>
 
-
                     <h:outputLabel for="oidini" value="Porta Inicial:" />
                     <h:panelGrid columns="1"  >
-                        <p:inputText id="oidini" value="#{deviceBean.device.oid.portInicial}" required="true" label="Porta Inicial" size="37"/>
+                        <p:inputText id="oidini" value="#{deviceBean.oid.portInicial}" required="true" label="Porta Inicial" size="37"/>
                         <p:message for="oidini" />
                     </h:panelGrid>
 
 
                     <h:outputLabel for="oidfinal" value="Porta Final:" />
                     <h:panelGrid columns="1"  >
-                        <p:inputText id="oidfinal" value="#{deviceBean.device.oid.portFinal}" required="true" label="Porta Final" size="37"/>
+                        <p:inputText id="oidfinal" value="#{deviceBean.oid.portFinal}" required="true" label="Porta Final" size="37"/>
                         <p:message for="oidfinal" />
                     </h:panelGrid>
 
@@ -76,16 +97,14 @@ and open the template in the editor.
 
                     <h:outputLabel for="ip" value="IP:" />
                     <h:panelGrid columns="1"  >
-                        <p:inputText id="ip" value="#{deviceBean.device.ip}" required="true" label="IP" size="37"/>
+                        <p:inputText id="ip" value="#{deviceBean.device.ip}" required="true" label="IP"  size="37"/>
+                        <p:watermark for="ip" value="Ex.: 255.255.255.255" id="watermark" />
                         <p:message for="ip" />
                     </h:panelGrid>
 
-                    <f:facet name="footer" >
-                        <!--<p:commandButton  icon="ui-icon-disk" value="Salvar" styleClass="save" onclick="#{deviceBean.teste()}"/>-->
-                    </f:facet>  
                 </h:panelGrid>
                 <div align="center" >
-                    <p:commandButton  icon="ui-icon-disk" value="Salvar" styleClass="save" ajax = "false" update="listDevices msgs @parent" actionListener="#{deviceBean.createNew()}" action="#{deviceBean.reinit}">
+                    <p:commandButton  icon="ui-icon-disk" value="Salvar" styleClass="save" ajax = "false" update="listDevices msgs @parent" actionListener="#{deviceBean.createNew}" action="#{deviceBean.reinit}">
                         <!--<p:collector value="#{deviceBean.device}" addTo="#{deviceBean.listDevices}" unique="true"/>-->
                     </p:commandButton>
 

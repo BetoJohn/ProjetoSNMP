@@ -18,7 +18,20 @@ and open the template in the editor.
         <p:commandButton value="Show Dialog" action="#{dialogView.dialogView()}"></p:commandButton>
         <p:commandButton id="insertDevice" type="button" value="Novo Dispositivo" onclick="PF('dlg').show();" icon="ui-icon-document" />
         <p:growl id="msgs" />
+        <p:panel header="Create a new book" style="margin-bottom:20px">
+            <h:panelGrid columns="2" cellpadding="5">
+                <h:outputLabel value="Title : *" for="txt_title"></h:outputLabel>
+                <p:inputText id="txt_title" value="#{collectorView.book.title}" required="true"/>
 
+                <h:outputLabel value="Author : *" for="txt_author"></h:outputLabel>
+                <p:inputText id="txt_author" value="#{collectorView.book.author}" required="true"/>
+
+                <p:commandButton id="btn_reset" value="Reset" type="reset"/>
+                <p:commandButton id="btn_add" value="Add" update="books msgs @parent" action="#{collectorView.reinit}" >
+                    <p:collector value="#{collectorView.book}" addTo="#{collectorView.books}" unique="true"/>
+                </p:commandButton>
+            </h:panelGrid>
+        </p:panel>
 
 
         <p:outputPanel id="books">
