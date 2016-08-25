@@ -9,6 +9,7 @@ package br.com.snmp.bean_view;
  *
  * @author carlos.macedo
  */
+import br.com.snmp.model.Device;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
@@ -18,7 +19,13 @@ import org.primefaces.context.RequestContext;
  
 @ManagedBean
 public class UserLoginView {
-     
+    
+    private Device dev;
+
+    public Device getDev() {
+        return dev;
+    }
+    
     private String username;
      
     private String password;
@@ -40,6 +47,8 @@ public class UserLoginView {
     }
    
     public void login(ActionEvent event) {
+        //String ident = dev.getIdentificacao();
+        
         RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage message = null;
         boolean loggedIn = false;

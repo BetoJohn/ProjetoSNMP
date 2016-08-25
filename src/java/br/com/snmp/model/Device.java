@@ -3,43 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.snmp.bean_view;
-
-import br.com.snmp.model.Device;
-import br.com.snmp.model.OID;
-import java.util.HashMap;
-import java.util.Map;
-import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
-import org.primefaces.context.RequestContext;
+package br.com.snmp.model;
 
 /**
  *
  * @author carlos.macedo
  */
-@ManagedBean(name = "dialogView")
-public class DialogFrameworkView {
-
+public class Device {
     private String identificacao;
     private String versao;
     private OID oid;
     private String comunidade;
     private String ip;
-
-    public void teste(ActionEvent event) {
-        String ident = identificacao;
-        String ver = versao;
-    }
-
-    public void dialogView() {
-        Map<String, Object> options = new HashMap<String, Object>();
-        options.put("resizable", false);
-        options.put("modal", true);
-        options.put("responsive", true);
-        RequestContext.getCurrentInstance().openDialog("testeDialog", options, null);
-    }
 
     public String getIdentificacao() {
         return identificacao;
@@ -80,7 +55,6 @@ public class DialogFrameworkView {
     public void setIp(String ip) {
         this.ip = ip;
     }
-    
     
     
 }

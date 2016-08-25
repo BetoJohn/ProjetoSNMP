@@ -12,7 +12,7 @@ and open the template in the editor.
       xmlns:p="http://primefaces.org/ui">
 
     <h:head>
-        <title>Cadastro Dispositivo</title>
+        <!--        <title>Cadastro Dispositivo</title>-->
         <script name="jquery/jquery.js" library="primefaces"></script>
         <link href="css/mycss.css" rel="stylesheet" type="text/css"/>
         <style type="text/css">
@@ -27,68 +27,71 @@ and open the template in the editor.
     </h:head>
 
     <h:body >
+        <p:panel header="Cadastro Dispositivo" style="margin-bottom:20px">
+            <h:form id="formCadastro" >
+                <p:growl id="msgs" />
+                <h:panelGrid columns="2" cellpadding="5" >
 
-        <h:form id="form" >
-            <h:panelGrid columns="2" cellpadding="5" >
 
-
-                <h:outputLabel for="idDevice" value="Identificação:" />
-                <h:panelGrid columns="1"  >
-                    <p:inputText id="idDevice" value="" required="true" label="Device" size="35"/>
-                    <p:message for="idDevice" />
-                </h:panelGrid>
-
-                <h:outputLabel for="version" value="Versão:" />
-                <h:panelGrid columns="1"  >
-                    <p:inputText id="version" value="" required="true" label="Versão" size="35"/>
-                    <p:message for="version" />
-                </h:panelGrid>
-
-                <p:outputLabel value="OID:" for="dd" />
-                <h:panelGrid columns="1"  >
-                    <h:panelGrid columns="2"  >
-                        <p:commandButton  icon="ui-icon-document" value="Novo" />
-                        <p:autoComplete  id="dd" dropdown="true" value="#{autoCompleteView.txt6}" required="true" completeMethod="#{autoCompleteView.completeText}" />
+                    <h:outputLabel for="idDevice" value="Identificação:" />
+                    <h:panelGrid columns="1"  >
+                        <p:inputText id="idDevice" value="#{deviceBean.device.identificacao}" required="true" label="Device" size="37"/>
+                        <p:message for="idDevice" />
                     </h:panelGrid>
-                    <p:message for="dd" />
+
+                    <h:outputLabel for="version" value="Versão:" />
+                    <h:panelGrid columns="1"  >
+                        <p:inputText id="version" value="#{deviceBean.device.versao}" required="true" label="Versão" size="37"/>
+                        <p:message for="version" />
+                    </h:panelGrid>
+
+                    <p:outputLabel value="OID:" for="dd" />
+                    <h:panelGrid columns="1"  >
+                        <h:panelGrid columns="2"  >
+                            <p:commandButton  icon="ui-icon-document" value="Novo" />
+                            <p:autoComplete  id="dd" dropdown="true" value="#{deviceBean.device.oid.descricao}" required="true" completeMethod="#{autoCompleteView.completeText}" />
+                        </h:panelGrid>
+                        <p:message for="dd" />
+                    </h:panelGrid>
+
+
+                    <h:outputLabel for="oidini" value="Porta Inicial:" />
+                    <h:panelGrid columns="1"  >
+                        <p:inputText id="oidini" value="#{deviceBean.device.oid.portInicial}" required="true" label="Porta Inicial" size="37"/>
+                        <p:message for="oidini" />
+                    </h:panelGrid>
+
+
+                    <h:outputLabel for="oidfinal" value="Porta Final:" />
+                    <h:panelGrid columns="1"  >
+                        <p:inputText id="oidfinal" value="#{deviceBean.device.oid.portFinal}" required="true" label="Porta Final" size="37"/>
+                        <p:message for="oidfinal" />
+                    </h:panelGrid>
+
+                    <h:outputLabel for="comunidade" value="Comunidade:" />
+                    <h:panelGrid columns="1"  >
+                        <p:inputText id="comunidade" value="#{deviceBean.device.comunidade}" required="true" label="Comunidade" size="37"/>
+                        <p:message for="comunidade" />
+                    </h:panelGrid>
+
+                    <h:outputLabel for="ip" value="IP:" />
+                    <h:panelGrid columns="1"  >
+                        <p:inputText id="ip" value="#{deviceBean.device.ip}" required="true" label="IP" size="37"/>
+                        <p:message for="ip" />
+                    </h:panelGrid>
+
+                    <f:facet name="footer" >
+                        <!--<p:commandButton  icon="ui-icon-disk" value="Salvar" styleClass="save" onclick="#{deviceBean.teste()}"/>-->
+                    </f:facet>  
                 </h:panelGrid>
+                <div align="center" >
+                    <p:commandButton  icon="ui-icon-disk" value="Salvar" styleClass="save" ajax = "false" update="listDevices msgs @parent" actionListener="#{deviceBean.createNew()}" action="#{deviceBean.reinit}">
+                        <!--<p:collector value="#{deviceBean.device}" addTo="#{deviceBean.listDevices}" unique="true"/>-->
+                    </p:commandButton>
 
-
-                <h:outputLabel for="oidini" value="Porta Inicial:" />
-                <h:panelGrid columns="1"  >
-                    <p:inputText id="oidini" value="" required="true" label="Porta Inicial" size="35"/>
-                    <p:message for="oidini" />
-                </h:panelGrid>
-
-
-                <h:outputLabel for="oidfinal" value="Porta Final:" />
-                <h:panelGrid columns="1"  >
-                    <p:inputText id="oidfinal" value="" required="true" label="Porta Final" size="35"/>
-                    <p:message for="oidfinal" />
-                </h:panelGrid>
-
-                <h:outputLabel for="comunidade" value="Comunidade:" />
-                <h:panelGrid columns="1"  >
-                    <p:inputText id="comunidade" value="" required="true" label="Comunidade" size="35"/>
-                    <p:message for="comunidade" />
-                </h:panelGrid>
-
-                <h:outputLabel for="ip" value="IP:" />
-                <h:panelGrid columns="1"  >
-                    <p:inputText id="ip" value="" required="true" label="IP" size="35"/>
-                    <p:message for="ip" />
-                </h:panelGrid>
-                
-                <f:facet name="footer" >
-                    <!--<p:commandButton  icon="ui-icon-disk" value="Salvar" styleClass="save" onclick="#{deviceBean.teste()}"/>-->
-                </f:facet>  
-            </h:panelGrid>
-            <div align="center" >
-                <p:commandButton  icon="ui-icon-disk" value="Salvar" styleClass="save" ajax = "false" actionListener="#{device.teste()}"/>
-
-            </div>
-        </h:form>
-
+                </div>
+            </h:form>
+        </p:panel>
     </h:body>
 
 </html>

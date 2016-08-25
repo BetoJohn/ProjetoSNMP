@@ -23,9 +23,9 @@
 
                 <p:layoutUnit position="center">
 
-                    <h:form>
+                    <h:form id="formPrincipal">
                         <p:growl id="messages" showDetail="true"  />
-                        <p:toolbar>
+                        <p:toolbar id="toolbar">
                             <f:facet name="left">
                                 <!--onclick="PF('dlg').show();"-->
                                 <!--<p:commandButton id="insertDevice" type="button" value="Novo Dispositivo" onclick="PF('dlg').show();" icon="ui-icon-document" />-->
@@ -39,15 +39,15 @@
                                     <span class="ui-icon ui-icon-grip-dotted-vertical" />
                                 </span>
 
-<!--                                <p:menuButton value="Alertas" styleClass="menuButton">
-                                    <p:menuitem value="> 20 dias" update="messages" />
-                                    <p:menuitem value="> 30 dias"  update="messages"  />
-                                    <p:menuitem value="> 40 dias"  update="messages"   />
-                                    <p:menuitem value="> 50 dias"  update="messages"   />
-                                </p:menuButton>-->
-                                    
-                                    
-                                <p:splitButton styleClass="alertaDevices" value="Todos os Alertas" actionListener="#{buttonView.save}" update="messages" icon="ui-icon-folder-open">
+                                <!--                                <p:menuButton value="Alertas" styleClass="menuButton">
+                                                                    <p:menuitem value="> 20 dias" update="messages" />
+                                                                    <p:menuitem value="> 30 dias"  update="messages"  />
+                                                                    <p:menuitem value="> 40 dias"  update="messages"   />
+                                                                    <p:menuitem value="> 50 dias"  update="messages"   />
+                                                                </p:menuButton>-->
+
+
+                                <p:splitButton styleClass="alertaDevices" value="Todos os Alertas" actionListener="#{toolbarView.save}" update="messages" icon="ui-icon-folder-open">
                                     <p:menuitem value="> 20 dias" actionListener="#{toolbarView.save}" update="messages" />
                                     <p:menuitem value="> 30 dias" actionListener="#{toolbarView.update}" update="messages"  />
                                     <p:menuitem value="> 40 dias" actionListener="#{toolbarView.delete}" update="messages"   />
@@ -81,6 +81,47 @@
                             </p:columns>
                         </p:dataTable>
 
+
+
+                        <p:panel header="Create a new Device" style="margin-bottom:20px">
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <h:outputLabel value="Identificação : *" for="txt_title"></h:outputLabel>
+                                <p:inputText id="txt_title" value="#{deviceBean.identificacao}" required="true"/>
+
+                                <h:outputLabel value="Versão : *" for="txt_author"></h:outputLabel>
+                                <p:inputText id="txt_author" value="#{deviceBean.versao}" required="true"/>
+
+                                <p:commandButton id="btn_reset" value="Reset" type="reset"/>
+                                <p:commandButton id="btn_add" value="Add" action="#{deviceBean.createNew}" >
+                                    <!--<p:collector value="#{deviceBean.device}" addTo="#{deviceBean.listDevices}" unique="true"/>-->
+                                </p:commandButton>
+                            </h:panelGrid>
+                        </p:panel>
+                        
+                        
+                        <p:outputPanel id="devices">
+                            <p:dataTable value="#{deviceBean.listDevices}" var="dev" id="booksTable">
+
+                                <p:column headerText="Identificação">
+                                    <h:outputText value="#{dev.identificacao}" />
+                                </p:column>
+
+                                <p:column headerText="Author">
+                                    <f:facet name="header">
+                                        <h:outputText value="Author" />
+                                    </f:facet>
+                                    <h:outputText value="#{dev.versao}" />
+                                </p:column>
+
+                                <p:column headerText="Action">
+                                    <p:commandLink value="Remove" update=":form:formPrincipal" process=":form:formPrincipal">
+                                        <p:collector value="#{device}" removeFrom="#{deviceBean.listDevices}" unique="true"/>
+                                    </p:commandLink>
+                                </p:column>
+
+                            </p:dataTable>
+                        </p:outputPanel>
+
                         <!--appendTo="@(body)"-->
                         <p:dialog header="Login" widgetVar="dlg" focus="password"  resizable="false">
 
@@ -100,6 +141,7 @@
                         </p:dialog>
 
                     </h:form>
+
                     <script type="text/javascript">
                         function handleLoginRequest(xhr, status, args) {
                             if (args.validationFailed || !args.loggedIn) {
