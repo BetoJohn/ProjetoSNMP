@@ -28,37 +28,16 @@ public class DeviceBean implements Serializable {
     private Device device;
     private OID oid;
     private List<Device> listDevices;
+   
 
     @PostConstruct
     public void init() {
         device = new Device();
         oid = new OID();
-        device.setOid(oid);        
-        listDevices = new ArrayList<Device>();
-    }
-
-    public void createNew(ActionEvent event) {
+        device.setOid(oid);
         
-        
-        System.out.println(device.toString());
-       
-//        device.setComunidade(comunidade);
-//        device.setIp(ip);
-//        device.setOid(oid);
+        //listDevices = new ArrayList<Device>();
 
-//        if (listDevices.contains(device)) {
-//            FacesMessage msg = new FacesMessage("Dublicated", "This device has already been added");
-//            FacesContext.getCurrentInstance().addMessage(null, msg);
-//        } else {
-        if (listDevices == null) 
-            listDevices = new ArrayList<Device>();
-        listDevices.add(device);
-
-//        }
-    }
-    
-    public void createNewOID(ActionEvent event){
-        System.out.println(device.toString());
     }
 
     public String reinit() {
@@ -68,10 +47,49 @@ public class DeviceBean implements Serializable {
         return null;
     }
 
+    public void createNew(ActionEvent event) {
+
+        System.out.println(device.toString() + " - " + oid.toString());
+
+//        device.setComunidade(comunidade);
+//        device.setIp(ip);
+//        device.setOid(oid);
+//        if (listDevices.contains(device)) {
+//            FacesMessage msg = new FacesMessage("Dublicated", "This device has already been added");
+//            FacesContext.getCurrentInstance().addMessage(null, msg);
+//        } else {
+        if (listDevices == null) {
+            listDevices = new ArrayList<Device>();
+        }
+        listDevices.add(device);
+
+//        }
+    }
+
+    public void createNewOID(ActionEvent event) {
+        //descOID.add(device.getOid().getDescricao());
+        System.out.println(device.getOid().toString());
+    }
+
+    public List<String> completeOID(String query) {
+       List<String> results = new ArrayList<String>();
+        results.add("3562451252");
+        results.add("587576868");
+        results.add("35624989689435152");
+        results.add("3562452542152");
+        results.add("3562452435152");
+
+        return results;
+    }
+
     public List<Device> getListDevices() {
         return listDevices;
     }
 
+//    public List<String> getDescOID() {
+//        return descOID;
+//    }
+    
 
     public Device getDevice() {
         return device;
@@ -81,5 +99,4 @@ public class DeviceBean implements Serializable {
         return oid;
     }
 
-    
 }

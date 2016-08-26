@@ -40,7 +40,7 @@ public class OID {
 
     @Override
     public String toString() {
-        return "Descrição: "+descricao; //To change body of generated methods, choose Tools | Templates.
+        return " OID Descrição: "+descricao+" | Port Inicial: "+ portInicial+" | Port Final: "+portFinal; //To change body of generated methods, choose Tools | Templates.
     }
     
     

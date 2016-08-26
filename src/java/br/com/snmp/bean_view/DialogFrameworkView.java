@@ -7,6 +7,7 @@ package br.com.snmp.bean_view;
 
 import br.com.snmp.model.Device;
 import br.com.snmp.model.OID;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import javax.faces.application.FacesMessage;
@@ -20,7 +21,7 @@ import org.primefaces.context.RequestContext;
  * @author carlos.macedo
  */
 @ManagedBean(name = "dialogView")
-public class DialogFrameworkView {
+public class DialogFrameworkView implements Serializable{
 
     private String identificacao;
     private String versao;
@@ -28,17 +29,26 @@ public class DialogFrameworkView {
     private String comunidade;
     private String ip;
 
-    public void teste(ActionEvent event) {
-        String ident = identificacao;
-        String ver = versao;
-    }
-
-    public void dialogView() {
+    public void dialogViewCadastroDevice() {
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("resizable", false);
         options.put("modal", true);
         options.put("responsive", true);
-        RequestContext.getCurrentInstance().openDialog("dialogCadastroDevice", options, null);
+        options.put("contentHeight", 540);
+        options.put("contentWidth", 560);
+        RequestContext.getCurrentInstance().openDialog("Telas/dialogCadastro", options, null);
+       
+    }
+    public void dialogViewCadastroOID() {
+        System.out.println("Identificacao "+ identificacao);
+        Map<String, Object> options = new HashMap<String, Object>();
+        options.put("resizable", false);
+//        options.put("modal", true);
+        options.put("responsive", true);
+//        options.put("contentHeight", 540);
+//        options.put("contentWidth", 560);
+        RequestContext.getCurrentInstance().openDialog("dialogCadastroOID", options, null);
+       
     }
 
     public String getIdentificacao() {

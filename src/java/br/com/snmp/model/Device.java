@@ -60,7 +60,7 @@ public class Device implements Serializable{
 
     @Override
     public String toString() {
-        return "Indentificação: "+identificacao+" | Versão: "+versao+" | Comunidade: "+comunidade+" | IP: "+ip+" | OID Descrição: "+oid.getDescricao(); 
+        return "Indentificação: "+identificacao+" | Versão: "+versao+" | Comunidade: "+comunidade+" | IP: "+ip; 
     }
     
     

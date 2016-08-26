@@ -3,15 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/carlos.macedo/Documents/NetBeansProjects/ProjetoSnmp/src/java/br/com/snmp/bean_view/CollectorView.java</file>
             <file>file:/C:/Users/carlos.macedo/Documents/NetBeansProjects/ProjetoSnmp/web/index.xhtml</file>
-            <file>file:/C:/Users/carlos.macedo/Documents/NetBeansProjects/ProjetoSnmp/web/testeDialog.xhtml</file>
-            <file>file:/C:/Users/carlos.macedo/Documents/NetBeansProjects/ProjetoSnmp/web/dialogCadastroDevice.xhtml</file>
-            <file>file:/C:/Users/carlos.macedo/Documents/NetBeansProjects/ProjetoSnmp/web/teste1.xhtml</file>
-            <file>file:/C:/Users/carlos.macedo/Documents/NetBeansProjects/ProjetoSnmp/src/java/br/com/snmp/bean_view/DeviceOIDBean.java</file>
-            <file>file:/C:/Users/carlos.macedo/Documents/NetBeansProjects/ProjetoSnmp/src/java/br/com/snmp/bean_view/DialogFrameworkView.java</file>
+            <file>file:/C:/Users/carlos.macedo/Documents/NetBeansProjects/ProjetoSnmp/web/Telas/dialogCadastro.xhtml</file>
             <file>file:/C:/Users/carlos.macedo/Documents/NetBeansProjects/ProjetoSnmp/src/java/br/com/snmp/bean_view/DeviceBean.java</file>
-            <file>file:/C:/Users/carlos.macedo/Documents/NetBeansProjects/ProjetoSnmp/web/teste.xhtml</file>
+            <file>file:/C:/Users/carlos.macedo/Documents/NetBeansProjects/ProjetoSnmp/web/res/mycss.css</file>
+            <file>file:/C:/Users/carlos.macedo/Documents/NetBeansProjects/ProjetoSnmp/src/java/br/com/snmp/BO/SnmpBO.java</file>
+            <file>file:/C:/Users/carlos.macedo/Documents/NetBeansProjects/ProjetoSnmp/src/java/br/com/snmp/DAO/SnmpDAO.java</file>
+            <file>file:/C:/Users/carlos.macedo/Documents/NetBeansProjects/ProjetoSnmp/src/java/br/com/snmp/connection/Connection.java</file>
         </group>
     </open-files>
 </project-private>
