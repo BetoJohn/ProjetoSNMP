@@ -39,6 +39,18 @@ public class DialogFrameworkView implements Serializable{
         RequestContext.getCurrentInstance().openDialog("Telas/dialogCadastro", options, null);
        
     }
+    
+    public void dialogViewEditDevice() {
+        Map<String, Object> options = new HashMap<String, Object>();
+        options.put("resizable", false);
+        options.put("modal", true);
+        options.put("responsive", true);
+//        options.put("contentHeight", 540);
+//        options.put("contentWidth", 560);
+        RequestContext.getCurrentInstance().openDialog("Telas/dialogEditDevice", options, null);
+       
+    }
+    
     public void dialogViewCadastroOID() {
         System.out.println("Identificacao "+ identificacao);
         Map<String, Object> options = new HashMap<String, Object>();

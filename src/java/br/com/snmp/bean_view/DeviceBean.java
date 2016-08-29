@@ -5,18 +5,24 @@
  */
 package br.com.snmp.bean_view;
 
+import br.com.snmp.BO.SnmpBO;
 import br.com.snmp.model.Device;
 import br.com.snmp.model.OID;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.validation.constraints.Min;
+import org.apache.jasper.tagplugins.jstl.ForEach;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.SelectEvent;
+import org.primefaces.event.UnselectEvent;
 
 /**
  *
@@ -28,16 +34,15 @@ public class DeviceBean implements Serializable {
     private Device device;
     private OID oid;
     private List<Device> listDevices;
-   
+    private Device selectedDevice;
 
     @PostConstruct
     public void init() {
         device = new Device();
         oid = new OID();
         device.setOid(oid);
-        
-        //listDevices = new ArrayList<Device>();
 
+        //listDevices = new ArrayList<Device>();
     }
 
     public String reinit() {
@@ -46,9 +51,11 @@ public class DeviceBean implements Serializable {
         device.setOid(oid);
         return null;
     }
+    
 
-    public void createNew(ActionEvent event) {
+    public void createNewDevice(ActionEvent event) {
 
+        SnmpBO.getInstance().saveDevice(device);
         System.out.println(device.toString() + " - " + oid.toString());
 
 //        device.setComunidade(comunidade);
@@ -58,38 +65,63 @@ public class DeviceBean implements Serializable {
 //            FacesMessage msg = new FacesMessage("Dublicated", "This device has already been added");
 //            FacesContext.getCurrentInstance().addMessage(null, msg);
 //        } else {
-        if (listDevices == null) {
-            listDevices = new ArrayList<Device>();
-        }
-        listDevices.add(device);
-
+//        if (listDevices == null) {
+//            listDevices = new ArrayList<Device>();
 //        }
+//        listDevices.add(device);
+//        }
+    }
+
+    public void excluirDevice() {
+        System.out.println("Device: "+selectedDevice.getIdentificacao());
     }
 
     public void createNewOID(ActionEvent event) {
         //descOID.add(device.getOid().getDescricao());
+        SnmpBO.getInstance().saveOID(oid);
         System.out.println(device.getOid().toString());
     }
 
     public List<String> completeOID(String query) {
-       List<String> results = new ArrayList<String>();
-        results.add("3562451252");
-        results.add("587576868");
-        results.add("35624989689435152");
-        results.add("3562452542152");
-        results.add("3562452435152");
-
+        List<String> results = new ArrayList<String>();
+//        results.add("3562451252");
+//        results.add("587576868");
+//        results.add("35624989689435152");
+//        results.add("3562452542152");
+//        results.add("3562452435152");
+        for (OID result : SnmpBO.getInstance().getAllOID()) {
+            results.add(result.getDescricao());
+        }
         return results;
     }
 
-    public List<Device> getListDevices() {
-        return listDevices;
+    public void onRowSelect(SelectEvent event) {
+        FacesMessage msg;
+        msg = new FacesMessage("Device Selected", " " + ((Device) event.getObject()).getIdentificacao());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+
     }
 
-//    public List<String> getDescOID() {
-//        return descOID;
-//    }
-    
+    public void onRowUnselect(UnselectEvent event) {
+        FacesMessage msg = new FacesMessage("Device Unselected", " " + ((Device) event.getObject()).getIdentificacao());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
+    public void dialogViewEditDevice() {
+        Map<String, Object> options = new HashMap<String, Object>();
+        options.put("resizable", false);
+        options.put("modal", true);
+        options.put("responsive", true);
+//        options.put("contentHeight", 540);
+//        options.put("contentWidth", 560);
+        RequestContext.getCurrentInstance().openDialog("Telas/dialogEditDevice", options, null);
+
+    }
+
+    public List<Device> getListDevices() {
+        listDevices = SnmpBO.getInstance().getAllDevices();
+        return listDevices;
+    }
 
     public Device getDevice() {
         return device;
@@ -97,6 +129,14 @@ public class DeviceBean implements Serializable {
 
     public OID getOid() {
         return oid;
+    }
+
+    public Device getSelectedDevice() {
+        return selectedDevice;
+    }
+
+    public void setSelectedDevice(Device selectedDevice) {
+        this.selectedDevice = selectedDevice;
     }
 
 }

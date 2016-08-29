@@ -14,7 +14,7 @@ and open the template in the editor.
     <h:head>
         <!--        <title>Cadastro Dispositivo</title>-->
         <script name="jquery/jquery.js" library="primefaces"></script>
-        <link href="res/mycss.css" rel="stylesheet" type="text/css"/>
+        <link href="../res/mycss.css" rel="stylesheet" type="text/css"/>
         <style type="text/css">
             /*                        .ui-widget {
                                         font-size: 90%;                
@@ -86,7 +86,7 @@ and open the template in the editor.
 
                     </h:panelGrid>
                     <div align="center" >
-                        <p:commandButton  icon="ui-icon-disk" value="Salvar" styleClass="save" ajax = "false" update="listDevices msgs @parent" actionListener="#{deviceBean.createNew}" action="#{deviceBean.reinit}">
+                        <p:commandButton  icon="ui-icon-disk" value="Salvar"  styleClass="save" ajax = "false" update="listDevices msgs @parent" actionListener="#{deviceBean.createNewDevice}" action="#{deviceBean.reinit}">
                             <!--<p:collector value="#{deviceBean.device}" addTo="#{deviceBean.listDevices}" unique="true"/>-->
                         </p:commandButton>
 

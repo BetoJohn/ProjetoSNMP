@@ -9,26 +9,29 @@ package br.com.snmp.model;
  *
  * @author carlos.macedo
  * Car(getRandomId(), getRandomBrand(), getRandomYear(), getRandomColor(), getRandomPrice(), getRandomSoldState())
+ *  private String identificacao;
+    private String versao;
+    private OID oid;
+    private String comunidade;
+    private String ip;
  */
 public class Car {
     private String id;
-    private String brand;
-    private int year;
-    private String color;
-    private int price;
-    private boolean state;
+    private String identificacao;
+    private String versao;
+    private OID oid;
+    private String comunidade;
+    private String ip;
 
-    public Car(String id, String brand, int year, String color, int price, boolean state) {
+    public Car(String id, String identificacao, String versao, OID oid, String comunidade, String ip) {
         this.id = id;
-        this.brand = brand;
-        this.year = year;
-        this.color = color;
-        this.price = price;
-        this.state = state;
+        this.identificacao = identificacao;
+        this.versao = versao;
+        this.oid = oid;
+        this.comunidade = comunidade;
+        this.ip = ip;
     }
 
-    
-    
     public String getId() {
         return id;
     }
@@ -37,48 +40,46 @@ public class Car {
         this.id = id;
     }
 
-    public String getBrand() {
-        return brand;
+    public String getIdentificacao() {
+        return identificacao;
     }
 
-    public void setBrand(String brand) {
-        this.brand = brand;
+    public void setIdentificacao(String identificacao) {
+        this.identificacao = identificacao;
     }
 
-    public int getYear() {
-        return year;
+    public String getVersao() {
+        return versao;
     }
 
-    public void setYear(int year) {
-        this.year = year;
+    public void setVersao(String versao) {
+        this.versao = versao;
     }
 
-    public String getColor() {
-        return color;
+    public OID getOid() {
+        return oid;
     }
 
-    public void setColor(String color) {
-        this.color = color;
+    public void setOid(OID oid) {
+        this.oid = oid;
     }
 
-    public int getPrice() {
-        return price;
+    public String getComunidade() {
+        return comunidade;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
+    public void setComunidade(String comunidade) {
+        this.comunidade = comunidade;
     }
 
-    public boolean isState() {
-        return state;
+    public String getIp() {
+        return ip;
     }
 
-    public void setState(boolean state) {
-        this.state = state;
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 
-
-  
    
     
 

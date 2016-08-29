@@ -12,12 +12,22 @@ import java.io.Serializable;
  * @author carlos.macedo
  */
 public class Device implements Serializable{
+    private int id;
     private String identificacao;
     private String versao;
     private OID oid;
     private String comunidade;
     private String ip;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    
     public String getIdentificacao() {
         return identificacao;
     }

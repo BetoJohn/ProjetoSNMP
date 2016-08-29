@@ -5,11 +5,10 @@
  */
 package br.com.snmp.bean_view;
 
-/**
- *
- * @author carlos.macedo
- */
+
+import br.com.snmp.BO.SnmpBO;
 import br.com.snmp.model.Car;
+import br.com.snmp.model.Device;
 import br.com.snmp.service.CarService;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -22,32 +21,55 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
- 
+ /**
+ *
+ * @author carlos.macedo
+ *  private String identificacao;
+    private String versao;
+    private OID oid;
+    private String comunidade;
+    private String ip;
+ */
 @ManagedBean(name="dtColumnsView")
 @ViewScoped
 public class ColumnsView implements Serializable {
      
              
-    private final static List<String> VALID_COLUMN_KEYS = Arrays.asList("id", "brand", "year", "color", "price");
+    private final static List<String> VALID_COLUMN_KEYS = Arrays.asList("id", "identificacao", "versao", "comunidade", "ip");
      
-    private String columnTemplate = "id brand year color price"; //determina quais colonas irão aparecer
+    private String columnTemplate = "id identificacao versao comunidade ip"; //determina quais colunas irão aparecer
      
     private List<ColumnModel> columns;
      
     private List<Car> cars;
+    private List<Device> devices;
      
     private List<Car> filteredCars;
+    private List<Device> filteredDevices;
      
     @ManagedProperty("#{carService}")
     private CarService service;
  
     @PostConstruct
     public void init() {
-        cars = service.createCars(55);// quantidade de carros criados
-         
+        //cars = service.createCars(55);// quantidade de carros criados
+         devices = SnmpBO.getInstance().getAllDevices();
         createDynamicColumns();
     }
+
+    public List<Device> getDevices() {
+        return devices;
+    }
+
+    public List<Device> getFilteredDevices() {
+        return filteredDevices;
+    }
+
+    public void setFilteredDevices(List<Device> filteredDevices) {
+        this.filteredDevices = filteredDevices;
+    }
      
+    
     public List<Car> getCars() {
         return cars;
     }
