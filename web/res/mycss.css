@@ -8,21 +8,21 @@ and open the template in the editor.
     Author     : carlos.macedo
 */
 .newDevice{
-/*    height: 35px; 
-    width: 160px;*/
+    /*    height: 35px; 
+        width: 160px;*/
 }
 .alertaDevices{
-/*    height: 35px; */
+    /*    height: 35px; */
 }
 .menuButton{
     margin-left: 10px;
     width: 160px;
-   }
+}
 
 /*Altera a fonte do paginator*/
 .ui-paginator .ui-paginator-page, .ui-paginator .ui-paginator-pages, .ui-paginator .ui-paginator-next, .ui-paginator .ui-paginator-last, 
 .ui-paginator .ui-paginator-first, .ui-paginator .ui-paginator-prev, .ui-paginator .ui-paginator-current{
-     font-size: 80%;
+    font-size: 80%;
 }
 /*Fontes do cabeçalho da tabela*/
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{
@@ -48,6 +48,9 @@ and open the template in the editor.
 }
 .ui-message-error-detail{
     font-size: 80%;
+}
+.ui-layout-unit {
+    border: none;
 }
 
 

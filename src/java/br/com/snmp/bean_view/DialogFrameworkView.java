@@ -36,7 +36,7 @@ public class DialogFrameworkView implements Serializable{
         options.put("responsive", true);
         options.put("contentHeight", 540);
         options.put("contentWidth", 560);
-        RequestContext.getCurrentInstance().openDialog("Telas/dialogCadastro", options, null);
+        RequestContext.getCurrentInstance().openDialog("dialogCadastro", options, null);
        
     }
     
