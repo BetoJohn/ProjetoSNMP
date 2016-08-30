@@ -16,6 +16,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.validation.constraints.Min;
@@ -29,6 +30,7 @@ import org.primefaces.event.UnselectEvent;
  * @author carlos.macedo
  */
 @ManagedBean
+@SessionScoped
 public class DeviceBean implements Serializable {
 
     private Device device;
@@ -54,41 +56,22 @@ public class DeviceBean implements Serializable {
     
 
     public void createNewDevice(ActionEvent event) {
-
         SnmpBO.getInstance().saveDevice(device);
         System.out.println(device.toString() + " - " + oid.toString());
-
-//        device.setComunidade(comunidade);
-//        device.setIp(ip);
-//        device.setOid(oid);
-//        if (listDevices.contains(device)) {
-//            FacesMessage msg = new FacesMessage("Dublicated", "This device has already been added");
-//            FacesContext.getCurrentInstance().addMessage(null, msg);
-//        } else {
-//        if (listDevices == null) {
-//            listDevices = new ArrayList<Device>();
-//        }
-//        listDevices.add(device);
-//        }
     }
 
-    public void excluirDevice() {
+    public void excluirDevice(ActionEvent event) {
+        //Device dev = (Device)event.getSource()
         System.out.println("Device: "+selectedDevice.getIdentificacao());
     }
 
     public void createNewOID(ActionEvent event) {
-        //descOID.add(device.getOid().getDescricao());
         SnmpBO.getInstance().saveOID(oid);
         System.out.println(device.getOid().toString());
     }
 
     public List<String> completeOID(String query) {
         List<String> results = new ArrayList<String>();
-//        results.add("3562451252");
-//        results.add("587576868");
-//        results.add("35624989689435152");
-//        results.add("3562452542152");
-//        results.add("3562452435152");
         for (OID result : SnmpBO.getInstance().getAllOID()) {
             results.add(result.getDescricao());
         }

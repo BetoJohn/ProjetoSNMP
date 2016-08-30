@@ -53,7 +53,14 @@ and open the template in the editor.
     border: none;
 }
 
-
+/*.header{
+  background: url(res/imagens/jport.jpg) no-repeat center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background: red;
+}*/
 /*.ui-menubutton .menuButton .ui-button .ui-widget .ui-state-default .ui-corner-all .ui-button-text-icon-left {
    background-color: #009900!important;  
    background: #009900!important;

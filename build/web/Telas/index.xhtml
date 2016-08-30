@@ -19,89 +19,54 @@
                 .ui-layout-unit{
                     border: none;
                 }
+                /*                .header{
+                                    background-color: red;
+                                    background-image: url('../res/imagens/jport.jpg');
+                                }*/
+                /*                .header .ui-layout-unit-header{
+                                    background: yellow;
+                                }*/
+                /*                .header .ui-layout-unit-content{
+                                    background-color: red;
+                                    background-image: url('res/imagens/logo.png');
+                                }*/
+                /*                .header, .ui-top .ui-layout, .ui-top .ui-layout-bd, .ui-top .ui-layout-unit {
+                                     background-image: url('res/imagens/jport.jpg');
+                                    }*/
+
             </style>
         </h:head>
 
         <h:body>
 
             <p:layout fullPage="true">
-                <p:layoutUnit position="north" size="110" resizable="false"  gutter="0" closable="true" collapsible="true">
-                    <div style="position: relative; top: 0px; left: 0px; background: red;">
-                        <!--                        <a href="Telas/teste.xhtml">-->
-                        <p:graphicImage width="100%" height="80" title="JPortView"  value="res/imagens/jport.jpg"></p:graphicImage>
-                        <!--</a>-->
 
-                    </div >
 
-                </p:layoutUnit>
-
-                <p:layoutUnit style="background: red;" position="center">
+                <p:layoutUnit style=" border: none" position="center">
+                    <f:facet name="header">
+                        <p:graphicImage width="100%" height="60" title="JPortView"  value="res/imagens/jport.jpg"></p:graphicImage>
+                    </f:facet>
 
                     <h:form id="formPrincipal">
                         <p:growl id="messages" showDetail="true"  />
-                        <p:toolbar id="toolbar">
-                            <f:facet name="left">
-                                <!--onclick="PF('dlg').show();"-->
-                                <!--<p:commandButton id="insertDevice" type="button" value="Novo Dispositivo" onclick="PF('dlg').show();" icon="ui-icon-document" />-->
-                                <h:form id="form">
-                                    <p:commandButton styleClass="newDevice"  value="Novo Dispositivo" actionListener="#{dialogView.dialogViewCadastroDevice()}" icon="ui-icon-document" />
-                                </h:form>
-
-                                <!--                                <p:commandButton type="button" value="Open" icon="ui-icon-folder-open" />-->
-
-                                <span class="ui-separator">
-                                    <span class="ui-icon ui-icon-grip-dotted-vertical" />
-                                </span>
-
-                                <!--                                <p:menuButton value="Alertas" styleClass="menuButton">
-                                                                    <p:menuitem value="> 20 dias" update="messages" />
-                                                                    <p:menuitem value="> 30 dias"  update="messages"  />
-                                                                    <p:menuitem value="> 40 dias"  update="messages"   />
-                                                                    <p:menuitem value="> 50 dias"  update="messages"   />
-                                                                </p:menuButton>-->
-
-
-                                <p:splitButton styleClass="alertaDevices" value="Todos os Alertas" actionListener="#{toolbarView.save}" update="messages" icon="ui-icon-folder-open">
-                                    <p:menuitem value="> 20 dias" actionListener="#{toolbarView.save}" update="messages" />
-                                    <p:menuitem value="> 30 dias" actionListener="#{toolbarView.update}" update="messages"  />
-                                    <p:menuitem value="> 40 dias" actionListener="#{toolbarView.delete}" update="messages"   />
-                                    <p:menuitem value="> 50 dias" actionListener="#{toolbarView.delete}" update="messages"   />
-                                </p:splitButton>
-
-                                <!--                                <span class="ui-separator">
-                                                                    <span class="ui-icon ui-icon-grip-dotted-vertical" />
-                                                                </span>
-                                
-                                                                <p:commandButton type="button" styleClass="commandButton1" title="Save" icon="ui-icon-disk" />
-                                                                <p:commandButton type="button" title="Delete" icon="ui-icon-trash" />
-                                                                <p:commandButton type="button" title="Print" icon="ui-icon-print" />-->
-                            </f:facet>
-
-                            <f:facet name="right">
-
-                            </f:facet>
-
-                        </p:toolbar>
-
-
-
-                        <!--appendTo="@(body)"-->
-                        <p:dialog header="Login" widgetVar="dlg" focus="password"  resizable="false">
-
-                            <h:panelGrid columns="2" cellpadding="5">
-                                <h:outputLabel for="username" value="Username:" />
-                                <p:inputText id="username" value="#{userLoginView.username}" required="true" label="username" />
-
-                                <h:outputLabel for="password" value="Password:" />
-                                <p:password id="password" value="#{userLoginView.password}" required="true" label="password" />
-
-                                <f:facet name="footer">
-                                    <p:commandButton value="Login" update="messages" actionListener="#{userLoginView.login}"
-                                                     oncomplete="handleLoginRequest(xhr, status, args)" />
-                                </f:facet>  
-                            </h:panelGrid>
-
-                        </p:dialog>
+                        <p:tabMenu activeIndex="#{param.i}">
+                            <p:menuitem value="Novo Dispositivo" actionListener="#{dialogView.dialogViewCadastroDevice()}" icon="ui-icon-star">
+                                <f:param name="i" value="0" />
+                            </p:menuitem>
+                            <p:menuitem value="Demos"  icon="ui-icon-search">
+                                <f:param name="i" value="1" />
+                            </p:menuitem>
+                            <p:menuitem value="Documentation"  icon="ui-icon-document">
+                                <f:param name="i" value="2" />
+                            </p:menuitem>
+                            <p:menuitem value="Support"  icon="ui-icon-wrench">
+                                <f:param name="i" value="3" />
+                            </p:menuitem>
+                            <p:menuitem value="Dashboard" outcome="welcomePrimefaces.xhtml" icon="ui-icon-person">
+                                <f:param name="i" value="4" />
+                            </p:menuitem>
+                        </p:tabMenu>
+                       
 
                     </h:form>
                     <h:form id="form">
@@ -110,7 +75,7 @@
                                      rows="15"   paginator="true"   paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                      rowsPerPageTemplate="10,15,20,30,50">         
                             <p:ajax event="rowSelect" listener="#{deviceBean.onRowSelect}" update=":form:deviceDetail" oncomplete="PF('deviceDialog').show()" />
-                            <p:ajax event="rowUnselect" listener="#{deviceBean.onRowUnselect}" update=":formPrincipal:messages" />
+                            <!--<p:ajax event="rowUnselect" listener="#{deviceBean.onRowUnselect}" update=":formPrincipal:messages" />-->
                             <p:columns value="#{dtColumnsView.columns}" var="column" columnIndexVar="colIndex" sortBy="#{device[column.property]}" filterBy="#{device[column.property]}">
                                 <f:facet name="header">
                                     <h:outputText value="#{column.header}" />
@@ -142,7 +107,7 @@
                                 </p:panelGrid>
 
                             </p:outputPanel>
-                            <!--oncomplete="PF('deviceDialog').show()" action="#{dialogView.dialogViewEditDevice()}"--> 
+                            
                             <f:facet name="footer" >
                                 <p:toolbar id="toolbarEdit">
                                     <f:facet name="right">
@@ -154,8 +119,8 @@
                                     </f:facet>
                                     <f:facet name="left">
                                         <!--<p:commandButton icon="fa fa-fw fa-remove" value="Excluir" oncomplete="PF('excluirDevice').hide()" />-->
-                                        <p:commandButton value="Excluir" actionListener="#{deviceBean.excluirDevice()}" icon="ui-icon-trash" update=":formPrincipal:messages">
-                                            <p:confirm header="Excluir Dispositivo" message="Deseja realmente excluir o dipositivo?" icon="ui-icon-alert" />
+                                        <p:commandButton value="Excluir" process="@this" actionListener="#{deviceBean.excluirDevice}" icon="ui-icon-trash" update=":formPrincipal:messages">
+                                            <!--<p:confirm header="Excluir Dispositivo" message="Deseja realmente excluir o dipositivo?" icon="ui-icon-alert" />-->
                                         </p:commandButton>
 
                                         <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
