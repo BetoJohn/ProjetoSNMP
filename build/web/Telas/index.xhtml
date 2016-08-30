@@ -86,7 +86,7 @@
                         </p:dataTable>
 
                         <p:dialog header="Device" widgetVar="deviceDialog" modal="true" appendTo="@(body)" showEffect="fade" hideEffect="explode" resizable="false">
-
+                            
                             <p:outputPanel id="deviceDetail" style="text-align:center;">
 
                                 <p:panelGrid  columns="2"  rendered="#{not empty deviceBean.selectedDevice}" columnClasses="label,value">
@@ -119,14 +119,14 @@
                                     </f:facet>
                                     <f:facet name="left">
                                         <!--<p:commandButton icon="fa fa-fw fa-remove" value="Excluir" oncomplete="PF('excluirDevice').hide()" />-->
-                                        <p:commandButton value="Excluir" process="@this" actionListener="#{deviceBean.excluirDevice}" icon="ui-icon-trash" update=":formPrincipal:messages">
-                                            <!--<p:confirm header="Excluir Dispositivo" message="Deseja realmente excluir o dipositivo?" icon="ui-icon-alert" />-->
+                                        <p:commandButton value="Excluir" process="@this"  actionListener="#{deviceBean.excluirDevice}" icon="ui-icon-trash" update=":formPrincipal:messages">
+                                            <p:confirm header="Excluir Dispositivo" message="Deseja realmente excluir o dipositivo?" icon="ui-icon-alert" />
                                         </p:commandButton>
 
                                         <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                                             <div align="right">
-                                                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" oncomplete="PF('excluirDevice').hide()"/>
-                                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
                                             </div>
                                         </p:confirmDialog>
 

@@ -25,8 +25,20 @@ public class SnmpDAO {
 
     public static SnmpDAO getInstance() {
         if (dao == null) {
-            dao = new SnmpDAO();
+            dao = new SnmpDAO();            
             listDevice = new ArrayList<>();
+            Device dev = new Device();
+            dev.setId(1);
+            dev.setComunidade("alfa");
+            dev.setIdentificacao("229829792");
+            dev.setVersao("2.1");
+            dev.setIp("192.168.10.10");
+            OID oid = new OID();
+            oid.setDescricao("132.1.1.431.3");
+            oid.setPortInicial(2);
+            oid.setPortFinal(10);
+            dev.setOid(oid);
+            listDevice.add(dev);
             listOID = new ArrayList<OID>();
         }
         return dao;

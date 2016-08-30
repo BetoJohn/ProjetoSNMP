@@ -16,6 +16,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -24,13 +25,14 @@ import org.apache.jasper.tagplugins.jstl.ForEach;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
-
+import org.primefaces.event.CloseEvent;
 /**
  *
  * @author carlos.macedo
  */
 @ManagedBean
 @SessionScoped
+//@RequestScoped
 public class DeviceBean implements Serializable {
 
     private Device device;
@@ -60,9 +62,9 @@ public class DeviceBean implements Serializable {
         System.out.println(device.toString() + " - " + oid.toString());
     }
 
-    public void excluirDevice(ActionEvent event) {
-        //Device dev = (Device)event.getSource()
+    public void excluirDevice() {
         System.out.println("Device: "+selectedDevice.getIdentificacao());
+        RequestContext.getCurrentInstance().execute("PF('deviceDialog').hide()");
     }
 
     public void createNewOID(ActionEvent event) {
