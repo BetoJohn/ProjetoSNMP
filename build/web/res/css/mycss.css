@@ -81,6 +81,10 @@ and open the template in the editor.
     width: 160px;
 }
 
+.semBorda tr, .semBorda td {
+	border: none !important;
+        width: 100px
+}
 
 /*.header{
   background: url(res/imagens/jport.jpg) no-repeat center center;
