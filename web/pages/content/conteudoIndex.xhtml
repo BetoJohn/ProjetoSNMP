@@ -1,0 +1,330 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:form id="form">
+        <p:commandButton class="btn newDevice" value="Novo Dispositivo" oncomplete="PF('cadastroDispositivoDialog').show()" icon="ui-icon-plus"/>
+     
+        <p:dataTable id="devices"   widgetVar="tableDevices"  emptyMessage="Nenhum Dispositivo Cadastrado!" var="dev" value="#{deviceSnmpBean.listDevices}" 
+                     rows="10"   paginator="true" scrollWidth="true" scrollable="true"  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                     rowsPerPageTemplate="10,20,30,50">    
+
+            <!--<p:ajax event="rowSelect" listener="#{deviceSnmpBean.onRowSelect}" update=":formEditar:deviceDetail" oncomplete="PF('deviceDialog').show()" />-->
+
+            <f:facet name="header">
+                <div align="right">
+                    
+                        <p:outputPanel>
+                            <h:outputText value="Search all fields:" />
+                            <p:inputText  id="globalFilter" onkeyup="PF('tableDevices').filter()" style="width:200px" placeholder="Pesquisa"/>
+                        </p:outputPanel>
+
+                        <h:commandLink>
+                            <p:graphicImage  library="imagens" name="pdf.png" width="24"/>
+                            <p:dataExporter type="pdf" target="devices" fileName="Dispositivos" />
+                        </h:commandLink>
+                  
+                </div>
+            </f:facet>
+
+          
+            <p:column style="width: 10%" sortBy="#{dev.id}" headerText="Id" filterBy="#{dev.id}" filterMatchMode="contains">
+                <h:outputText value="#{dev.id}" />
+            </p:column>
+
+            <p:column style="width: 20%" sortBy="#{dev.ip}" headerText="IP" filterBy="#{dev.ip}" filterMatchMode="contains">
+                <h:outputText value="#{dev.ip}" />
+            </p:column>
+
+            <p:column style="width: 20%" headerText="Identificação" sortBy="#{dev.identificacao}" filterBy="#{dev.identificacao}" >
+                <h:outputText value="#{dev.identificacao}" />
+            </p:column>
+
+            <p:column style="width: 20%" headerText="Versão" sortBy="#{dev.versao}" filterBy="#{dev.versao}">
+                <h:outputText value="#{dev.versao}" />
+            </p:column>
+
+            <p:column style="width: 20%" headerText="Comunidade" sortBy="#{dev.comunidade}" filterBy="#{dev.comunidade}">
+                <h:outputText value="#{dev.comunidade}" />
+            </p:column>
+
+            <p:column style="width: 5%" headerText="Porta Inicial" >
+                <h:outputText value="#{dev.oid.portInicial}" />
+            </p:column>
+
+            <p:column style="width: 5%" headerText="Porta Final" >
+                <h:outputText value="#{dev.oid.portFinal}" />
+            </p:column>
+
+            <p:column style="width:5%;text-align: center" exportable="false">
+                <p:commandButton update=":formEditar:deviceDetail" oncomplete="PF('deviceDialogEditar').show()" action="#{deviceSnmpBean.selectedDeviceDoDevice()}" icon="ui-icon-pencil" title="Editar" style="margin-right: 5px">
+                    <f:setPropertyActionListener value="#{dev}" target="#{deviceSnmpBean.selectedDevice}"  />
+                </p:commandButton>
+
+                <p:commandButton update=":formExcluir:deviceDetail" oncomplete="PF('deviceDialogExcluir').show()" action="#{deviceSnmpBean.selectedDeviceDoDevice()}" icon="ui-icon-trash" title="Excluir" style="margin-right: 5px; margin-top: 3px">
+                    <f:setPropertyActionListener value="#{dev}" target="#{deviceSnmpBean.selectedDevice}"  />
+                </p:commandButton>
+            </p:column>
+        </p:dataTable>
+    </h:form>
+    <!--Dialog Cadastrar-->
+    <p:dialog header="Cadastro Dispositivo" widgetVar="cadastroDispositivoDialog" modal="true" appendTo="@(body)" showEffect="fade" hideEffect="explode" resizable="false">
+
+        <p:tabView widgetVar="tabView">
+
+            <p:tab title="Cadastro Dispositivo" >
+                <h:form id="formCadastro" >
+                    <h:panelGrid columns="2" cellpadding="5" >
+
+
+                        <h:outputLabel for="idDevice" value="Identificação:" />
+                        <h:panelGrid columns="1"  >
+                            <p:inputText id="idDevice" value="#{deviceSnmpBean.device.identificacao}" required="true" label="Device" size="37"/>
+                            <div style="font-size: 50%">
+                                <p:message for="idDevice" />
+                            </div>
+                        </h:panelGrid>
+
+                        <h:outputLabel for="version" value="Versão:" />
+                        <h:panelGrid columns="1"  >
+                            <p:inputText id="version" value="#{deviceSnmpBean.device.versao}" required="true" label="Versão" size="37"/>
+                            <p:message for="version" />
+                        </h:panelGrid>
+
+                        <p:outputLabel value="OID:" for="dd" />
+                        <h:panelGrid columns="1"  >
+                            <p:autoComplete  id="dd" dropdown="true" value="#{deviceSnmpBean.oid.descricao}" required="true" size="33" completeMethod="#{deviceSnmpBean.completeOID}"/>
+                            <p:message for="dd" />
+                        </h:panelGrid>
+
+                        <h:outputLabel for="oidini" value="Porta Inicial:" />
+                        <h:panelGrid columns="1"  >
+                            <p:inputText id="oidini" type="number" value="#{deviceSnmpBean.oid.portInicial}" required="true" label="Porta Inicial" size="37"/>
+                            <p:message for="oidini" />
+                        </h:panelGrid>
+
+
+                        <h:outputLabel for="oidfinal" value="Porta Final:" />
+                        <h:panelGrid columns="1"  >
+                            <p:inputText id="oidfinal" value="#{deviceSnmpBean.oid.portFinal}" required="true" label="Porta Final" size="37"/>
+                            <p:message for="oidfinal" />
+                        </h:panelGrid>
+
+                        <h:outputLabel for="comunidade" value="Comunidade:" />
+                        <h:panelGrid columns="1"  >
+                            <p:inputText id="comunidade" value="#{deviceSnmpBean.device.comunidade}" required="true" label="Comunidade" size="37"/>
+                            <p:message for="comunidade" />
+                        </h:panelGrid>
+
+                        <h:outputLabel for="ip" value="IP:" />
+                        <h:panelGrid columns="1"  >
+                            <p:inputText id="ip" value="#{deviceSnmpBean.device.ip}" required="true" label="IP"  size="37"/>
+                            <p:watermark for="ip" value="Ex.: 255.255.255.255" id="watermark" />
+                            <p:message for="ip" />
+                        </h:panelGrid>
+
+                    </h:panelGrid>
+                    <div align="center" >
+
+                        <h:panelGrid columns="3" cellpadding="5">
+                            <p:commandButton  icon="ui-icon-disk" value="Salvar"  styleClass="save"  update="formCadastro" actionListener="#{deviceSnmpBean.createNewDevice}" action="#{deviceSnmpBean.reinit}"/>
+                            <span class="ui-separator">
+                                <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                            </span>
+                            <p:commandButton  icon="ui-icon-cancel" value="Sair" oncomplete="PF('cadastroDispositivoDialog').hide()" action="#{deviceSnmpBean.reinit}"/>
+                        </h:panelGrid>
+
+
+                    </div>
+                </h:form>
+            </p:tab>
+            <p:tab title="Novo OID">
+                <p:fieldset legend="OID" style="margin-bottom:20px">
+                    <h:form id="formInsertIdentOID" >
+                        <div align="center" class="divBtnOk">
+                            <h:panelGrid columns="1" cellpadding="5" style="margin-top: 10px">
+                                <p:inputText id="idDeviceOID" value="#{deviceSnmpBean.oid.descricao}" style="width: 300px" required="true" label="OID" />         
+                                <p:message for="idDeviceOID" />
+                            </h:panelGrid>
+
+                            <h:panelGrid columns="3" cellpadding="5">
+                                <p:commandButton update="formInsertIdentOID" icon="ui-icon-check"  value="Salvar" styleClass="btnOkIdent" actionListener="#{deviceSnmpBean.createNewOID}" action="#{deviceSnmpBean.reinit}"/>
+                                <span class="ui-separator">
+                                    <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                </span>
+                                <p:commandButton  icon="ui-icon-cancel" value="Sair" oncomplete="PF('cadastroDispositivoDialog').hide()"/>
+                            </h:panelGrid>
+
+
+
+
+
+                        </div>
+                    </h:form>
+
+                </p:fieldset>
+
+            </p:tab>
+
+        </p:tabView>
+
+
+
+    </p:dialog>   
+
+    <!--Dialog Editar-->
+    <p:dialog header="Editar Dispositivo" widgetVar="deviceDialogEditar" modal="true" appendTo="@(body)" showEffect="fade" hideEffect="explode" resizable="false">
+        <h:form id="formEditar">
+            <p:outputPanel id="deviceDetail" style="text-align:center;">
+
+                <p:panelGrid  columns="2"  rendered="#{not empty deviceSnmpBean.selectedDevice}" columnClasses="label,value">
+
+                    <h:outputLabel for="idDevice" value="Identificação:" />
+                    <h:panelGrid columns="1"  >
+                        <p:inputText id="idDevice" value="#{deviceSnmpBean.device.identificacao}" required="true" label="Device" size="37"/>
+                        <div style="font-size: 50%">
+                            <p:message for="idDevice" />
+                        </div>
+                    </h:panelGrid>
+
+                    <h:outputLabel for="version" value="Versão:" />
+                    <h:panelGrid columns="1"  >
+                        <p:inputText id="version" value="#{deviceSnmpBean.device.versao}" required="true" label="Versão" size="37"/>
+                        <p:message for="version" />
+                    </h:panelGrid>
+
+                    <p:outputLabel value="OID:" for="dd" />
+                    <h:panelGrid columns="1"  >
+                        <p:autoComplete  id="dd" dropdown="true" value="#{deviceSnmpBean.oid.descricao}" required="true" size="33" completeMethod="#{deviceSnmpBean.completeOID}"/>
+                        <p:message for="dd" />
+                    </h:panelGrid>
+
+                    <h:outputLabel for="oidini" value="Porta Inicial:" />
+                    <h:panelGrid columns="1"  >
+                        <p:inputText id="oidini" type="number" value="#{deviceSnmpBean.oid.portInicial}" required="true" label="Porta Inicial" size="37"/>
+                        <p:message for="oidini" />
+                    </h:panelGrid>
+
+
+                    <h:outputLabel for="oidfinal" value="Porta Final:" />
+                    <h:panelGrid columns="1"  >
+                        <p:inputText id="oidfinal" value="#{deviceSnmpBean.oid.portFinal}" required="true" label="Porta Final" size="37"/>
+                        <p:message for="oidfinal" />
+                    </h:panelGrid>
+
+                    <h:outputLabel for="comunidade" value="Comunidade:" />
+                    <h:panelGrid columns="1"  >
+                        <p:inputText id="comunidade" value="#{deviceSnmpBean.device.comunidade}" required="true" label="Comunidade" size="37"/>
+                        <p:message for="comunidade" />
+                    </h:panelGrid>
+
+                    <h:outputLabel for="ip" value="IP:" />
+                    <h:panelGrid columns="1"  >
+                        <p:inputText id="ip" value="#{deviceSnmpBean.device.ip}" required="true" label="IP"  size="37"/>
+                        <p:watermark for="ip" value="Ex.: 255.255.255.255" id="watermark" />
+                        <p:message for="ip" />
+                    </h:panelGrid>
+                </p:panelGrid>
+
+            </p:outputPanel>
+            <div align="center">
+                <h:panelGrid columns="4" cellpadding="3">
+
+                    <p:commandButton  update="formEditar" styleClass="edit" actionListener="#{deviceSnmpBean.editDevice()}" action="#{deviceSnmpBean.reinit}" icon="ui-icon-pencil" value="Editar"  >
+                        <p:confirm header="Editar Dispositivo" message="Deseja realmente editar o dipositivo?" icon="ui-icon-alert" />
+                    </p:commandButton>
+
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <div align="right">
+                            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" oncomplete="PF('deviceDialogEditar').hide()"/>
+                            <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                        </div>
+                    </p:confirmDialog>
+                    <span class="ui-separator">
+                        <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                    </span>
+                    <p:commandButton  icon="ui-icon-cancel" value="Cancelar" oncomplete="PF('deviceDialogEditar').hide()" action="#{deviceSnmpBean.reinit}"/>
+                    <!--<p:commandButton icon="fa fa-fw fa-remove" value="Excluir" oncomplete="PF('excluirDevice').hide()" />-->
+
+                </h:panelGrid>
+            </div>
+        </h:form>
+    </p:dialog>     
+
+    <!--Dialog Excluir-->
+    <p:dialog header="Excluir Dispositivo" widgetVar="deviceDialogExcluir" modal="true" appendTo="@(body)" showEffect="fade" hideEffect="explode" resizable="false">
+        <h:form id="formExcluir">
+            <p:outputPanel id="deviceDetail" style="text-align:center;">
+
+                <p:panelGrid  columns="2"  rendered="#{not empty deviceSnmpBean.selectedDevice}" columnClasses="label,value">
+
+                    <h:outputLabel for="idDevice" value="Identificação:" />
+                    <h:panelGrid columns="1"  >
+                        <p:outputLabel id="idDevice" value="#{deviceSnmpBean.device.identificacao}" />
+                    </h:panelGrid>
+
+                    <h:outputLabel for="version" value="Versão:" />
+                    <h:panelGrid columns="1"  >
+                        <p:outputLabel id="version" value="#{deviceSnmpBean.device.versao}" />
+                    </h:panelGrid>
+
+                    <p:outputLabel value="OID:" for="dd" />
+                    <h:panelGrid columns="1"  >
+                        <p:outputLabel  id="dd"  value="#{deviceSnmpBean.oid.descricao}" />
+                    </h:panelGrid>
+
+                    <h:outputLabel for="oidini" value="Porta Inicial:" />
+                    <h:panelGrid columns="1"  >
+                        <p:outputLabel id="oidini"  value="#{deviceSnmpBean.oid.portInicial}" />
+                    </h:panelGrid>
+
+
+                    <h:outputLabel for="oidfinal" value="Porta Final:" />
+                    <h:panelGrid columns="1"  >
+                        <p:outputLabel id="oidfinal" value="#{deviceSnmpBean.oid.portFinal}" />
+                    </h:panelGrid>
+
+                    <h:outputLabel for="comunidade" value="Comunidade:" />
+                    <h:panelGrid columns="1"  >
+                        <p:outputLabel id="comunidade" value="#{deviceSnmpBean.device.comunidade}" />
+                    </h:panelGrid>
+
+                    <h:outputLabel for="ip" value="IP:" />
+                    <h:panelGrid columns="1"  >
+                        <p:outputLabel id="ip" value="#{deviceSnmpBean.device.ip}"/>
+                        <p:message for="ip" />
+                    </h:panelGrid>
+                </p:panelGrid>
+
+            </p:outputPanel>
+            <div align="center">
+                <h:panelGrid columns="6" cellpadding="3">
+
+                    <p:commandButton value="Excluir" process="@this"  actionListener="#{deviceSnmpBean.excluirDevice}" action="#{deviceSnmpBean.reinit}" icon="ui-icon-trash" >
+                        <p:confirm header="Excluir Dispositivo" message="Deseja realmente excluir o dipositivo?" icon="ui-icon-alert" />
+                    </p:commandButton>
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <div align="right">
+                            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" oncomplete="PF('deviceDialogExcluir').hide()"/>
+                            <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                        </div>
+                    </p:confirmDialog>
+                    <span class="ui-separator">
+                        <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                    </span>
+                    <p:commandButton  icon="ui-icon-cancel" value="Cancelar" oncomplete="PF('deviceDialogExcluir').hide()" action="#{deviceSnmpBean.reinit}"/>
+                    <!--<p:commandButton icon="fa fa-fw fa-remove" value="Excluir" oncomplete="PF('excluirDevice').hide()" />-->
+
+                </h:panelGrid>
+            </div> 
+
+
+        </h:form>
+    </p:dialog>     
+
+</html>
+

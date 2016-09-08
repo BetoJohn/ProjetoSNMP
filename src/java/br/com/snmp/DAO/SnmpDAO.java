@@ -38,7 +38,7 @@ public class SnmpDAO {
             oid.setPortInicial(2);
             oid.setPortFinal(10);
             dev.setOid(oid);
-            listDevice.add(dev);
+          //  listDevice.add(dev);
             listOID = new ArrayList<OID>();
         }
         return dao;
