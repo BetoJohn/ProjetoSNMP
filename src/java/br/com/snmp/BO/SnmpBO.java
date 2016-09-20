@@ -43,4 +43,12 @@ public class SnmpBO {
     public List<OID> getAllOID() {
         return SnmpDAO.getInstance().getAllOID();
     }
+    
+    public List<Device> getByIdentificacao(Device dev) {
+        return SnmpDAO.getInstance().getByIdentificacao(dev);
+    }
+    
+    public void refreshTable(){
+        SnmpDAO.getInstance().refreshTable();
+    }
 }

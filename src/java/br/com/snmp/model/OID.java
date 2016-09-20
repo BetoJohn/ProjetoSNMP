@@ -5,14 +5,16 @@
  */
 package br.com.snmp.model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author carlos.macedo
  */
-public class OID {
+public class OID implements Serializable{
     private String descricao;
-    private int portInicial;
-    private int portFinal;
+    private Integer portInicial;
+    private Integer portFinal;
 
     public String getDescricao() {
         return descricao;
@@ -22,21 +24,23 @@ public class OID {
         this.descricao = descricao;
     }
 
-    public int getPortInicial() {
+    public Integer getPortInicial() {
         return portInicial;
     }
 
-    public void setPortInicial(int portInicial) {
+    public void setPortInicial(Integer portInicial) {
         this.portInicial = portInicial;
     }
 
-    public int getPortFinal() {
+    public Integer getPortFinal() {
         return portFinal;
     }
 
-    public void setPortFinal(int portFinal) {
+    public void setPortFinal(Integer portFinal) {
         this.portFinal = portFinal;
     }
+
+    
 
     @Override
     public String toString() {

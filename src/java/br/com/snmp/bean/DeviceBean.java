@@ -45,6 +45,7 @@ public class DeviceBean implements Serializable {
     private Device selectedDevice;
     private List<Device> filteredDevices;
     private String filterBy;
+    private String search;
 
     @PostConstruct
     public void init() {
@@ -133,14 +134,28 @@ public class DeviceBean implements Serializable {
         RequestContext.getCurrentInstance().openDialog("Telas/dialogEditDevice", options, null);
 
     }
-    public List getListFilter(){
+
+    public List getListFilter() {
         List<String> filters = new ArrayList<>();
         filters.add("Id");
         filters.add("Identificação");
         filters.add("Versão");
         filters.add("Comunidade");
-        filters.add("Ip");                   
+        filters.add("Ip");
         return filters;
+    }
+
+    public void getByIdentificacao() {
+        device = new Device();
+        String filter = filterBy;
+        device.setIdentificacao(search);
+        SnmpBO.getInstance().getByIdentificacao(device);
+        device = new Device();
+    }
+
+    public void refreshTable() {
+        //SnmpBO.getInstance().refreshTable();
+        RequestContext.getCurrentInstance().update("form:devices");
     }
 
     public List<Device> getListDevices() {
@@ -188,5 +203,12 @@ public class DeviceBean implements Serializable {
         this.filterBy = filterBy;
     }
 
-    
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
+    }
+
 }
