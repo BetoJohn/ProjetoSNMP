@@ -19,9 +19,6 @@
 
 
                 <h:panelGrid columns="6" cellpadding="5">
-                    <!--                    <p:outputPanel>
-                                            <p:inputText  id="filtro" onkeyup="PF('tableDevices').filter()" style="width:200px" placeholder="Pesquisa"/>
-                                        </p:outputPanel>-->
                     <p:selectOneMenu id="filterBy" value="#{deviceSnmpBean.filterBy}" style="width:120px">        
                         <f:selectItem itemLabel="Filtrar por:" itemValue="default" noSelectionOption="true" />
                         <f:selectItems value="#{deviceSnmpBean.listFilter}" />
@@ -135,16 +132,19 @@
                             <p:message for="dd" />
                         </h:panelGrid>
 
-                        <h:outputLabel for="oidini" value="Porta Inicial:" />
+                       <h:outputLabel for="oidini" value="Porta Inicial:" />
                         <h:panelGrid columns="1"  >
-                            <p:inputText id="oidini"  value="#{deviceSnmpBean.oid.portInicial}" required="true" label="Porta Inicial" size="37"/>
+                            <p:inputText id="oidini"  binding="#{portaInicialBiding}" value="#{deviceSnmpBean.oid.portInicial}" required="true" label="Porta Inicial" size="37"/>
                             <p:message for="oidini" />
                         </h:panelGrid>
 
 
                         <h:outputLabel for="oidfinal" value="Porta Final:" />
                         <h:panelGrid columns="1"  >
-                            <p:inputText id="oidfinal" value="#{deviceSnmpBean.oid.portFinal}" required="true" label="Porta Final" size="37"/>
+                            <p:inputText id="oidfinal" value="#{deviceSnmpBean.oid.portFinal}" required="true" label="Porta Final" size="37" >
+                                <f:validator validatorId="portValidator" />
+                                <f:attribute name="portaInicial" value="#{portaInicialBiding.value}" />           
+                            </p:inputText>
                             <p:message for="oidfinal" />
                         </h:panelGrid>
 
@@ -156,7 +156,9 @@
 
                         <h:outputLabel for="ip" value="IP:" />
                         <h:panelGrid columns="1"  >
-                            <p:inputText id="ip" value="#{deviceSnmpBean.device.ip}" required="true" label="IP"  size="37"/>
+                            <p:inputText id="ip" value="#{deviceSnmpBean.device.ip}" required="true" label="IP"  size="37" >
+                            <f:validator validatorId="ipValidator" />
+                            </p:inputText>
                             <p:watermark for="ip" value="Ex.: 255.255.255.255" id="watermark" />
                             <p:message for="ip" />
                         </h:panelGrid>
