@@ -6,8 +6,10 @@
 package br.com.snmp.BO;
 
 import br.com.snmp.DAO.SnmpDAO;
+import br.com.snmp.connection.ConnectionDB;
 import br.com.snmp.model.Device;
 import br.com.snmp.model.OID;
+import java.sql.Connection;
 import java.util.List;
 
 /**
@@ -28,27 +30,50 @@ public class SnmpBO {
         return snmpBO;
     }
 
-    public void saveDevice(Device dev) {
-        SnmpDAO.getInstance().saveDevice(dev);
+    public void insertDevice(Device dev) throws Exception {
+        Connection con = null;
+        try {
+
+            con = ConnectionDB.getInstance().getConnection();
+            SnmpDAO dao = new SnmpDAO(con);
+            dao.insertDevice(dev);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            con.close();
+        }
     }
 
-    public List<Device> getAllDevices() {
-        return  SnmpDAO.getInstance().getAllDevices();
+    public List<Device> getAllDevices() throws Exception {
+        Connection con = null;
+        try {
+            con = ConnectionDB.getInstance().getConnection();
+            SnmpDAO dao = new SnmpDAO(con);
+            return dao.getAllDevices();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            con.close();
+        }
+
     }
 
-    public void saveOID(OID oid) {
-        SnmpDAO.getInstance().saveOID(oid);
-    }
-
-    public List<OID> getAllOID() {
-        return SnmpDAO.getInstance().getAllOID();
-    }
-    
-    public List<Device> getByIdentificacao(Device dev) {
-        return SnmpDAO.getInstance().getByIdentificacao(dev);
-    }
-    
-    public void refreshTable(){
-        SnmpDAO.getInstance().refreshTable();
-    }
+//    public void saveOID(OID oid) {
+//        SnmpDAO.getInstance().saveOID(oid);
+//    }
+//
+//    public List<OID> getAllOID() {
+//        return SnmpDAO.getInstance().getAllOID();
+//    }
+//
+//    public List<Device> getByIdentificacao(Device dev) {
+//        return SnmpDAO.getInstance().getByIdentificacao(dev);
+//    }
+//
+//    public void refreshTable() {
+//        SnmpDAO.getInstance().refreshTable();
+//    }
 }

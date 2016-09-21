@@ -7,6 +7,9 @@ package br.com.snmp.DAO;
 
 import br.com.snmp.model.Device;
 import br.com.snmp.model.OID;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,57 +17,66 @@ import java.util.List;
  *
  * @author carlos.macedo
  */
-public class SnmpDAO {
+public class SnmpDAO extends DaoBase {
 
     private static List<Device> listDevice;
     private static List<OID> listOID;
     private static SnmpDAO dao;
     private static List<Device> persistDevice;
 
-    private SnmpDAO() {
+    public SnmpDAO(Connection con) {
+        super(con);
     }
-
-    public static SnmpDAO getInstance() {
-        if (dao == null) {
-            dao = new SnmpDAO();            
-            listDevice = new ArrayList<>();
-            persistDevice = new ArrayList<>();
-           Device dev = new Device();
-            dev.setId(1);
-            dev.setComunidade("alfa");
-            dev.setIdentificacao("229829792");
-            dev.setVersao("2.1");
-            dev.setIp("10.104.1.111");
-            OID oid = new OID();
-            oid.setDescricao("132.1.1.431.3");
-            oid.setPortInicial(1);
-            oid.setPortFinal(3);
-            dev.setOid(oid);
-            listDevice.add(dev);
-            
-            dev = new Device();
-            dev.setId(2);
-            dev.setComunidade("alfa");
-            dev.setIdentificacao("229829792");
-            dev.setVersao("2.1");
-            dev.setIp("10.104.1.112");
-            oid = new OID();
-            oid.setDescricao("132.1.1.431.3");
-            oid.setPortInicial(1);
-            oid.setPortFinal(6);
-            dev.setOid(oid);
-            listDevice.add(dev);
-            
-            listOID = new ArrayList<OID>();
+      
+    public void insertDevice(Device dev) throws Exception {
+        String sql = "INSERT INTO teste(\n"
+                + "            nome, idade)\n"
+                + "    VALUES (?, ?);";
+        PreparedStatement ps = null;
+        try {
+            ps = createPreparedStatement(sql);
+            ps.setObject(1, dev.getIp());
+            ps.setObject(2, dev.getOid().getPortInicial());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            try {
+                ps.close();
+            } catch (Exception e) {
+            }
         }
-        return dao;
-    }
-    
-    public void saveDevice(Device dev) {
-        listDevice.add(dev);
-        persistDevice.add(dev);
+
     }
     public List<Device> getAllDevices(){
+        listDevice = new ArrayList();
+        Device dev = new Device();
+        dev.setId(1);
+        dev.setComunidade("alfa");
+        dev.setIdentificacao("229829792");
+        dev.setVersao("2.1");
+        dev.setIp("10.104.1.111");
+        OID oid = new OID();
+        oid.setDescricao("132.1.1.431.3");
+        oid.setPortInicial(1);
+        oid.setPortFinal(3);
+        dev.setOid(oid);
+        listDevice.add(dev);
+
+        dev = new Device();
+        dev.setId(2);
+        dev.setComunidade("alfa");
+        dev.setIdentificacao("229829792");
+        dev.setVersao("2.1");
+        dev.setIp("10.104.1.112");
+        oid = new OID();
+        oid.setDescricao("132.1.1.431.3");
+        oid.setPortInicial(1);
+        oid.setPortFinal(6);
+        dev.setOid(oid);
+        listDevice.add(dev);
+        
         return listDevice;
     }
 
@@ -101,6 +113,11 @@ public class SnmpDAO {
 
     public static void setPersistDevice(List<Device> persistDevice) {
         SnmpDAO.persistDevice = persistDevice;
+    }
+
+    @Override
+    public List resultSetToObject(ResultSet rs) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 

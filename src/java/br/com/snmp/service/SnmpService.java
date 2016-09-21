@@ -55,7 +55,7 @@ public class SnmpService {
 //        this.portInicial = portInicial;
 //        this.portFinal = portFinal;
 //    }
-    public void getValueSnmp(String path) {
+    public void getValueSnmp(String path) throws Exception {
         try {
             List<ReturnSnmp> mainList = new ArrayList<>();
             

@@ -53,7 +53,7 @@ public class DeviceBean implements Serializable {
         oid = new OID();
         device.setOid(oid);
 
-        listDevices = SnmpBO.getInstance().getAllDevices();
+    //    listDevices = SnmpBO.getInstance().getAllDevices();
     }
 
     public String reinit() {
@@ -63,8 +63,8 @@ public class DeviceBean implements Serializable {
         return null;
     }
 
-    public void createNewDevice(ActionEvent event) {
-        SnmpBO.getInstance().saveDevice(device);
+    public void createNewDevice(ActionEvent event) throws Exception {
+        SnmpBO.getInstance().insertDevice(device);
         System.out.println("createNewDevice DeviceBean: " + device.toString() + " - " + oid.toString());
         RequestContext.getCurrentInstance().update("form:devices");
     }
@@ -80,15 +80,15 @@ public class DeviceBean implements Serializable {
     }
 
     public void createNewOID(ActionEvent event) {
-        SnmpBO.getInstance().saveOID(oid);
+      //  SnmpBO.getInstance().saveOID(oid);
         System.out.println(device.getOid().toString());
     }
 
     public List<String> completeOID(String query) {
         List<String> results = new ArrayList<String>();
-        for (OID result : SnmpBO.getInstance().getAllOID()) {
-            results.add(result.getDescricao());
-        }
+//        for (OID result : SnmpBO.getInstance().getAllOID()) {
+//            results.add(result.getDescricao());
+//        }
         return results;
     }
 
@@ -149,7 +149,7 @@ public class DeviceBean implements Serializable {
         device = new Device();
         String filter = filterBy;
         device.setIdentificacao(search);
-        SnmpBO.getInstance().getByIdentificacao(device);
+    //    SnmpBO.getInstance().getByIdentificacao(device);
         device = new Device();
     }
 
@@ -158,7 +158,7 @@ public class DeviceBean implements Serializable {
         RequestContext.getCurrentInstance().update("form:devices");
     }
 
-    public List<Device> getListDevices() {
+    public List<Device> getListDevices() throws Exception {
         listDevices = SnmpBO.getInstance().getAllDevices();
         return listDevices;
     }
