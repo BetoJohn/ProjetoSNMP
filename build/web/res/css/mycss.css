@@ -81,6 +81,12 @@ and open the template in the editor.
     width: 160px;
 }
 
+.btn, .listDevice{  
+    margin-left: 10px;
+    margin-top: 5px;
+    height: 32px; 
+}
+
 .semBorda tr, .semBorda td {
 	border: none !important;
         width: 100px

@@ -3,12 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/carlos.macedo/Documents/NetBeansProjects/ProjetoSnmp/web/pages/templates/template.xhtml</file>
             <file>file:/C:/Users/carlos.macedo/Documents/NetBeansProjects/ProjetoSnmp/src/java/br/com/snmp/bean/SnmpBean.java</file>
-            <file>file:/C:/Users/carlos.macedo/Documents/NetBeansProjects/ProjetoSnmp/src/java/br/com/snmp/job/JobGetSnmp.java</file>
-            <file>file:/C:/Users/carlos.macedo/Documents/NetBeansProjects/ProjetoSnmp/src/java/br/com/snmp/util/Util.java</file>
             <file>file:/C:/Users/carlos.macedo/Documents/NetBeansProjects/ProjetoSnmp/web/pages/content/conteudoIndex.xhtml</file>
-            <file>file:/C:/Users/carlos.macedo/Documents/NetBeansProjects/ProjetoSnmp/src/java/br/com/snmp/service/SnmpService.java</file>
             <file>file:/C:/Users/carlos.macedo/Documents/NetBeansProjects/ProjetoSnmp/src/java/br/com/snmp/bean/DeviceBean.java</file>
         </group>
     </open-files>

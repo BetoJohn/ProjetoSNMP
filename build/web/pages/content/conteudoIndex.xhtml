@@ -13,10 +13,9 @@
         <p:toolbar>
             <f:facet name="left">
                 <p:commandButton update=":formExcluir:deviceDetail" class="btn newDevice" value="Novo Dispositivo" oncomplete="PF('cadastroDispositivoDialog').show()" icon="ui-icon-plus"/>
+                <p:commandButton id="btnUpdateTable" update="@(form)" class="btn listDevice" value="Listar Dispositivos" icon="ui-icon-refresh" actionListener="#{deviceSnmpBean.getAllDevices}"/>
             </f:facet>
             <f:facet name="right">
-
-
 
                 <h:panelGrid columns="6" cellpadding="5">
                     <p:selectOneMenu id="filterBy" value="#{deviceSnmpBean.filterBy}" style="width:120px">        
@@ -27,7 +26,7 @@
                     <p:inputText  id="filter" value="#{deviceSnmpBean.search}" style="width:200px" placeholder="Pesquisa"/>
                     <p:commandButton update="form:devices" icon="ui-icon-search" actionListener="#{deviceSnmpBean.getByIdentificacao}"/>
                     
-                    <p:commandButton id="btnUpdateTable" update="@(form)" icon="ui-icon-refresh" actionListener="#{deviceSnmpBean.refreshTable}"/>
+                    
                     <h:commandLink>
                         <p:graphicImage  library="imagens" name="pdf.png" width="24"/>
                         <p:dataExporter type="pdf" target="devices" fileName="Dispositivos" />
@@ -84,11 +83,11 @@
             </p:column>
 
             <p:column style="width: 5%" headerText="Porta Inicial" >
-                <h:outputText value="#{dev.oid.portInicial}" />
+                <h:outputText value="#{dev.portInicial}" />
             </p:column>
 
             <p:column style="width: 5%" headerText="Porta Final" >
-                <h:outputText value="#{dev.oid.portFinal}" />
+                <h:outputText value="#{dev.portFinal}" />
             </p:column>
 
             <p:column style="width:5%;text-align: center" exportable="false">
@@ -126,22 +125,25 @@
                             <p:message for="version" />
                         </h:panelGrid>
 
-                        <p:outputLabel value="OID:" for="dd" />
+                        <p:outputLabel value="OID:" for="oid" />
                         <h:panelGrid columns="1"  >
-                            <p:autoComplete  id="dd" dropdown="true" value="#{deviceSnmpBean.oid.descricao}" required="true" size="33" completeMethod="#{deviceSnmpBean.completeOID}"/>
-                            <p:message for="dd" />
+                            <p:selectOneMenu id="oid" value="#{deviceSnmpBean.oid.id}" required="true" style="width:200px">
+                                <f:selectItem itemLabel="Selecione um OID" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{deviceSnmpBean.allOid}" var="oid" itemLabel="#{oid.descricao}" itemValue="#{oid.id}" />
+                            </p:selectOneMenu>
+                            <p:message for="oid" />
                         </h:panelGrid>
 
                        <h:outputLabel for="oidini" value="Porta Inicial:" />
                         <h:panelGrid columns="1"  >
-                            <p:inputText id="oidini"  binding="#{portaInicialBiding}" value="#{deviceSnmpBean.oid.portInicial}" required="true" label="Porta Inicial" size="37"/>
+                            <p:inputText id="oidini"  binding="#{portaInicialBiding}" value="#{deviceSnmpBean.device.portInicial}" required="true" label="Porta Inicial" size="37"/>
                             <p:message for="oidini" />
                         </h:panelGrid>
 
 
                         <h:outputLabel for="oidfinal" value="Porta Final:" />
                         <h:panelGrid columns="1"  >
-                            <p:inputText id="oidfinal" value="#{deviceSnmpBean.oid.portFinal}" required="true" label="Porta Final" size="37" >
+                            <p:inputText id="oidfinal" value="#{deviceSnmpBean.device.portFinal}" required="true" label="Porta Final" size="37" >
                                 <f:validator validatorId="portValidator" />
                                 <f:attribute name="portaInicial" value="#{portaInicialBiding.value}" />           
                             </p:inputText>
@@ -179,7 +181,7 @@
                 </h:form>
             </p:tab>
             <p:tab title="Novo OID">
-                <p:fieldset legend="OID" style="margin-bottom:20px">
+                <p:fieldset legend="OID Descrição" style="margin-bottom:20px">
                     <h:form id="formInsertIdentOID" >
                         <div align="center" class="divBtnOk">
                             <h:panelGrid columns="1" cellpadding="5" style="margin-top: 10px">
@@ -241,14 +243,14 @@
 
                     <h:outputLabel for="oidini" value="Porta Inicial:" />
                     <h:panelGrid columns="1"  >
-                        <p:inputText id="oidini" type="number" value="#{deviceSnmpBean.oid.portInicial}" required="true" label="Porta Inicial" size="37"/>
+                        <p:inputText id="oidini" type="number" value="#{deviceSnmpBean.device.portInicial}" required="true" label="Porta Inicial" size="37"/>
                         <p:message for="oidini" />
                     </h:panelGrid>
 
 
                     <h:outputLabel for="oidfinal" value="Porta Final:" />
                     <h:panelGrid columns="1"  >
-                        <p:inputText id="oidfinal" value="#{deviceSnmpBean.oid.portFinal}" required="true" label="Porta Final" size="37"/>
+                        <p:inputText id="oidfinal" value="#{deviceSnmpBean.device.portFinal}" required="true" label="Porta Final" size="37"/>
                         <p:message for="oidfinal" />
                     </h:panelGrid>
 
@@ -315,13 +317,13 @@
 
                     <h:outputLabel for="oidini" value="Porta Inicial:" />
                     <h:panelGrid columns="1"  >
-                        <p:outputLabel id="oidini"  value="#{deviceSnmpBean.oid.portInicial}" />
+                        <p:outputLabel id="oidini"  value="#{deviceSnmpBean.device.portInicial}" />
                     </h:panelGrid>
 
 
                     <h:outputLabel for="oidfinal" value="Porta Final:" />
                     <h:panelGrid columns="1"  >
-                        <p:outputLabel id="oidfinal" value="#{deviceSnmpBean.oid.portFinal}" />
+                        <p:outputLabel id="oidfinal" value="#{deviceSnmpBean.device.portFinal}" />
                     </h:panelGrid>
 
                     <h:outputLabel for="comunidade" value="Comunidade:" />

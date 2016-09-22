@@ -54,7 +54,7 @@ public abstract class DaoBase<T> {
         return dataList;
     }
     
-    public abstract List<T> resultSetToObject(ResultSet rs) throws Exception;
+    
     
     public DaoBase(Connection con) {
         setConnetion(con);

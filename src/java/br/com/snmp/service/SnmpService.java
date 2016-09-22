@@ -10,7 +10,6 @@ import br.com.snmp.model.Device;
 import br.com.snmp.model.ResultSnmp;
 import br.com.snmp.model.ReturnSnmp;
 import br.com.snmp.util.Util;
-import static com.oracle.jrockit.jfr.ContentType.Address;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -60,8 +59,8 @@ public class SnmpService {
             List<ReturnSnmp> mainList = new ArrayList<>();
             
             for (Device device : SnmpBO.getInstance().getAllDevices()) {
-                int portInicial = device.getOid().getPortInicial();
-                int portFinal = device.getOid().getPortFinal();
+                int portInicial = device.getPortInicial();
+                int portFinal = device.getPortFinal();
                 
                 if (portFinal > portInicial) {
                     ReturnSnmp rs = new ReturnSnmp();

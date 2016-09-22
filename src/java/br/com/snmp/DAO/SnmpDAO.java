@@ -20,7 +20,6 @@ import java.util.List;
 public class SnmpDAO extends DaoBase {
 
     private static List<Device> listDevice;
-    private static List<OID> listOID;
     private static SnmpDAO dao;
     private static List<Device> persistDevice;
 
@@ -28,15 +27,22 @@ public class SnmpDAO extends DaoBase {
         super(con);
     }
       
-    public void insertDevice(Device dev) throws Exception {
-        String sql = "INSERT INTO teste(\n"
-                + "            nome, idade)\n"
-                + "    VALUES (?, ?);";
+   public void insertDevice(Device dev) throws Exception {
+        String sql = "INSERT INTO device(\n"
+                + "             identificacao, versao, oid_id, comunidade, ip, porta_inicial, \n"
+                + "            porta_final)\n"
+                + "    VALUES (?, ?, ?, ?, ?, ?, ?);";
         PreparedStatement ps = null;
         try {
             ps = createPreparedStatement(sql);
-            ps.setObject(1, dev.getIp());
-            ps.setObject(2, dev.getOid().getPortInicial());
+            ps.setObject(1, dev.getIdentificacao());
+            ps.setObject(2, dev.getVersao());
+            ps.setObject(3, dev.getOid().getId());
+            ps.setObject(4, dev.getComunidade());
+            ps.setObject(5, dev.getIp());
+            ps.setObject(6, dev.getPortInicial());
+            ps.setObject(7, dev.getPortFinal());
+
             ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -49,42 +55,138 @@ public class SnmpDAO extends DaoBase {
         }
 
     }
-    public List<Device> getAllDevices(){
-        listDevice = new ArrayList();
-        Device dev = new Device();
-        dev.setId(1);
-        dev.setComunidade("alfa");
-        dev.setIdentificacao("229829792");
-        dev.setVersao("2.1");
-        dev.setIp("10.104.1.111");
-        OID oid = new OID();
-        oid.setDescricao("132.1.1.431.3");
-        oid.setPortInicial(1);
-        oid.setPortFinal(3);
-        dev.setOid(oid);
-        listDevice.add(dev);
+   
+    public List<Device> getAllDevices() throws Exception {
+        String sql = "SELECT * FROM device;";
+        ResultSet rs = null;
+        PreparedStatement ps = null;
+        try {
+            ps = createPreparedStatement(sql);
+            rs = ps.executeQuery();
+            List<Device> listDevice = new ArrayList<>();
+            while (rs.next()) {
+                Device dev = new Device();
+                dev.setId(rs.getInt("id"));
+                dev.setIdentificacao(rs.getString("identificacao"));
+                dev.setComunidade(rs.getString("comunidade"));
+                dev.setVersao(rs.getString("versao"));
+                dev.setPortInicial(rs.getInt("porta_inicial"));
+                dev.setPortFinal(rs.getInt("porta_final"));
+                dev.setIp(rs.getString("ip"));
+                dev.setOid(getOIDById(rs.getInt("oid_id")));
+                listDevice.add(dev);
+            }
 
-        dev = new Device();
-        dev.setId(2);
-        dev.setComunidade("alfa");
-        dev.setIdentificacao("229829792");
-        dev.setVersao("2.1");
-        dev.setIp("10.104.1.112");
-        oid = new OID();
-        oid.setDescricao("132.1.1.431.3");
-        oid.setPortInicial(1);
-        oid.setPortFinal(6);
-        dev.setOid(oid);
-        listDevice.add(dev);
-        
-        return listDevice;
+            return listDevice;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            try {
+                rs.close();
+            } catch (Exception e) {
+            }
+            try {
+                ps.close();
+            } catch (Exception e) {
+            }
+        }
     }
 
-    public void saveOID(OID oid) {
-        listOID.add(oid);
+    public int insertOID(OID oid) throws Exception {
+        int id = 0;
+        String sql = "INSERT INTO oid(\n"
+                + "             descricao)\n"
+                + "    VALUES (?) returning id;";
+        PreparedStatement ps = null;
+        try {
+            ps = createPreparedStatement(sql);
+            ps.setObject(1, oid.getDescricao());
+            ResultSet rsId = ps.executeQuery();
+            //ResultSet rsId = ps.getGeneratedKeys();
+
+            if (rsId.next()) {
+                id = rsId.getInt("id");
+                return id;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            try {
+                ps.close();
+            } catch (Exception e) {
+            }
+        }
+        return 0;
+    } 
+    
+   public List<OID> getAllOID() throws Exception {
+
+        String sql = "SELECT * FROM oid;";
+        ResultSet rs = null;
+        PreparedStatement ps = null;
+        try {
+            ps = createPreparedStatement(sql);
+            rs = ps.executeQuery();
+            List<OID> listOID = new ArrayList<>();
+            while (rs.next()) {
+                OID oid = new OID();
+                oid.setId(rs.getInt("id"));
+                oid.setDescricao(rs.getString("descricao"));
+                listOID.add(oid);
+            }
+
+            return listOID;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            try {
+                rs.close();
+            } catch (Exception e) {
+            }
+            try {
+                ps.close();
+            } catch (Exception e) {
+            }
+        }
+
     }
-    public List<OID> getAllOID(){
-        return listOID;
+
+    public OID getOIDById(int id) throws Exception {
+
+        String sql = "SELECT * FROM oid where id = ?;";
+        ResultSet rs = null;
+        PreparedStatement ps = null;
+
+        try {
+            ps = createPreparedStatement(sql);
+            ps.setObject(1, id);
+            rs = ps.executeQuery();
+
+            OID oid = new OID();
+            if (rs.next()) {
+                oid.setId(rs.getInt("id"));
+                oid.setDescricao(rs.getString("descricao"));
+            }
+
+            return oid;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            try {
+                rs.close();
+            } catch (Exception e) {
+            }
+            try {
+                ps.close();
+            } catch (Exception e) {
+            }
+        }
+
     }
 
     public List<Device> getDescOID() {
@@ -115,10 +217,6 @@ public class SnmpDAO extends DaoBase {
         SnmpDAO.persistDevice = persistDevice;
     }
 
-    @Override
-    public List resultSetToObject(ResultSet rs) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+   
 
 }

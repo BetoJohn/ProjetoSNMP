@@ -53,7 +53,7 @@ public class DeviceBean implements Serializable {
         oid = new OID();
         device.setOid(oid);
 
-    //    listDevices = SnmpBO.getInstance().getAllDevices();
+        //    listDevices = SnmpBO.getInstance().getAllDevices();
     }
 
     public String reinit() {
@@ -66,7 +66,16 @@ public class DeviceBean implements Serializable {
     public void createNewDevice(ActionEvent event) throws Exception {
         SnmpBO.getInstance().insertDevice(device);
         System.out.println("createNewDevice DeviceBean: " + device.toString() + " - " + oid.toString());
+        //RequestContext.getCurrentInstance().update("form:devices");
+        getAllDevices();
+    }
+
+    public List<Device> getAllDevices() throws Exception {
+        List<Device> list = new ArrayList<>();
+        list = SnmpBO.getInstance().getAllDevices();
+        listDevices = list;
         RequestContext.getCurrentInstance().update("form:devices");
+        return list;
     }
 
     public void editDevice() {
@@ -79,9 +88,17 @@ public class DeviceBean implements Serializable {
         RequestContext.getCurrentInstance().execute("PF('deviceDialogExcluir').hide()");
     }
 
-    public void createNewOID(ActionEvent event) {
-      //  SnmpBO.getInstance().saveOID(oid);
+    public void createNewOID(ActionEvent event) throws Exception {
+        SnmpBO.getInstance().insertOID(oid);
+        getAllOid();
         System.out.println(device.getOid().toString());
+    }
+
+    public List<OID> getAllOid() throws Exception {
+        List<OID> list = new ArrayList<>();
+        list = SnmpBO.getInstance().getAllOID();
+        return list;
+
     }
 
     public List<String> completeOID(String query) {
@@ -149,17 +166,12 @@ public class DeviceBean implements Serializable {
         device = new Device();
         String filter = filterBy;
         device.setIdentificacao(search);
-    //    SnmpBO.getInstance().getByIdentificacao(device);
+        //    SnmpBO.getInstance().getByIdentificacao(device);
         device = new Device();
     }
 
-    public void refreshTable() {
-        //SnmpBO.getInstance().refreshTable();
-        RequestContext.getCurrentInstance().update("form:devices");
-    }
-
     public List<Device> getListDevices() throws Exception {
-        listDevices = SnmpBO.getInstance().getAllDevices();
+        //listDevices = SnmpBO.getInstance().getAllDevices();
         return listDevices;
     }
 

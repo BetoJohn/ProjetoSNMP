@@ -61,14 +61,38 @@ public class SnmpBO {
 
     }
 
-//    public void saveOID(OID oid) {
-//        SnmpDAO.getInstance().saveOID(oid);
-//    }
-//
-//    public List<OID> getAllOID() {
-//        return SnmpDAO.getInstance().getAllOID();
-//    }
-//
+ public void insertOID(OID oid) throws Exception {
+        Connection con = null;
+        try {
+
+            con = ConnectionDB.getInstance().getConnection();
+            SnmpDAO dao = new SnmpDAO(con);
+            dao.insertOID(oid);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            con.close();
+        }
+    }
+ 
+public List<OID> getAllOID() throws Exception {
+        Connection con = null;
+        try {
+
+            con = ConnectionDB.getInstance().getConnection();
+            SnmpDAO dao = new SnmpDAO(con);
+            return dao.getAllOID();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            con.close();
+        }
+    }
+
 //    public List<Device> getByIdentificacao(Device dev) {
 //        return SnmpDAO.getInstance().getByIdentificacao(dev);
 //    }
