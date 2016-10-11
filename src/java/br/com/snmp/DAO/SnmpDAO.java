@@ -5,8 +5,10 @@
  */
 package br.com.snmp.DAO;
 
+import br.com.snmp.model.DataSnmp;
 import br.com.snmp.model.Device;
 import br.com.snmp.model.OID;
+import br.com.snmp.util.Util;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -189,6 +191,142 @@ public class SnmpDAO extends DaoBase {
 
     }
 
+     public void insertSnmpDevice(DataSnmp snmp) throws Exception {
+
+        String sql = "INSERT INTO snmp_device(\n"
+                + "             port, valor, status, device_id, data_hora)\n"
+                + "    VALUES ( ?, ?, ?, ?, ?);";
+        PreparedStatement ps = null;
+        Util util = new Util();
+        try {
+            ps = createPreparedStatement(sql);
+            ps.setObject(1, snmp.getPort());
+            ps.setObject(2, snmp.getValue());
+            ps.setString(3, snmp.getStatus());
+            ps.setObject(4, snmp.getDevice_id());
+            ps.setTimestamp(5, util.getDateTimestamp());
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            try {
+                ps.close();
+            } catch (Exception e) {
+            }
+        }
+
+    }
+
+    public List<DataSnmp> getAllSnmpDevice() throws Exception {
+
+        List<DataSnmp> listReturn_File = new ArrayList<>();
+        
+        String sql = "SELECT id, port, valor, status, device_id, data_hora\n"
+                + "  FROM snmp_device";
+        ResultSet rs = null;
+        PreparedStatement ps = null;
+
+        try {
+            ps = createPreparedStatement(sql);
+            rs = ps.executeQuery();
+
+             
+            while (rs.next()) {
+                DataSnmp snmp = new DataSnmp();
+                snmp.setId(rs.getInt("id"));
+                snmp.setPort(rs.getInt("port"));
+                snmp.setValue(rs.getInt("valor"));
+                snmp.setStatus(rs.getString("status"));
+                snmp.setDevice_id(rs.getInt("device_id"));
+                snmp.setTime(rs.getTimestamp("data_hora"));
+                listReturn_File.add(snmp);
+            }
+
+            return listReturn_File;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            try {
+                rs.close();
+            } catch (Exception e) {
+            }
+            try {
+                ps.close();
+            } catch (Exception e) {
+            }
+        }
+
+    }
+
+    public DataSnmp getSnmpDeviceByIdDeviceAndPort(int device_id, int port) throws Exception {
+
+        String sql = "SELECT id, port, valor, status, device_id, data_hora\n"
+                + "  FROM snmp_device where device_id = ? and port = ?;";
+        ResultSet rs = null;
+        PreparedStatement ps = null;
+
+        try {
+            ps = createPreparedStatement(sql);
+            ps.setObject(1, device_id);
+            ps.setObject(2, port);
+            rs = ps.executeQuery();
+
+            DataSnmp snmp = new DataSnmp();
+            if (rs.next()) {
+                snmp.setId(rs.getInt("id"));
+                snmp.setPort(rs.getInt("port"));
+                snmp.setValue(rs.getInt("valor"));
+                snmp.setStatus(rs.getString("status"));
+                snmp.setDevice_id(rs.getInt("device_id"));
+                snmp.setTime(rs.getTimestamp("data_hora"));
+            }
+
+            return snmp;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            try {
+                rs.close();
+            } catch (Exception e) {
+            }
+            try {
+                ps.close();
+            } catch (Exception e) {
+            }
+        }
+
+    }
+
+    public void updateSnmpDevice(DataSnmp snmp) throws Exception {
+
+        String sql = "UPDATE snmp_device\n"
+                + "   SET   valor=?, status=?, data_hora=?\n"
+                + " WHERE id = ?;";
+        PreparedStatement ps = null;
+        Util util = new Util();
+        try {
+            ps = createPreparedStatement(sql);
+            ps.setObject(1, snmp.getValue());
+            ps.setObject(2, snmp.getStatus());
+            ps.setTimestamp(3, util.getDateTimestamp());
+            ps.setObject(4, snmp.getId());
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            try {
+                ps.close();
+            } catch (Exception e) {
+            }
+        }
+
+    }
     public List<Device> getDescOID() {
         return listDevice;
     }

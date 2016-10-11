@@ -7,6 +7,7 @@ package br.com.snmp.BO;
 
 import br.com.snmp.DAO.SnmpDAO;
 import br.com.snmp.connection.ConnectionDB;
+import br.com.snmp.model.DataSnmp;
 import br.com.snmp.model.Device;
 import br.com.snmp.model.OID;
 import java.sql.Connection;
@@ -93,11 +94,67 @@ public List<OID> getAllOID() throws Exception {
         }
     }
 
-//    public List<Device> getByIdentificacao(Device dev) {
-//        return SnmpDAO.getInstance().getByIdentificacao(dev);
-//    }
-//
-//    public void refreshTable() {
-//        SnmpDAO.getInstance().refreshTable();
-//    }
+public void insertSnmpDevice(DataSnmp snmp) throws Exception {
+        Connection con = null;
+        try {
+
+            con = ConnectionDB.getInstance().getConnection();
+            SnmpDAO dao = new SnmpDAO(con);
+            dao.insertSnmpDevice(snmp);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            con.close();
+        }
+    }
+
+    public List<DataSnmp> getAllSnmpDevice()  throws Exception {
+        Connection con = null;
+        try {
+
+            con = ConnectionDB.getInstance().getConnection();
+            SnmpDAO dao = new SnmpDAO(con);
+            return dao.getAllSnmpDevice();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            con.close();
+        }
+    }
+
+    public DataSnmp getSnmpDeviceByIdDeviceAndPort(int device_id, int port) throws Exception {
+        Connection con = null;
+        try {
+
+            con = ConnectionDB.getInstance().getConnection();
+            SnmpDAO dao = new SnmpDAO(con);
+            return dao.getSnmpDeviceByIdDeviceAndPort(device_id, port);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            con.close();
+        }
+    }
+
+    public void updateSnmpDevice(DataSnmp snmp) throws Exception {
+        Connection con = null;
+        try {
+
+            con = ConnectionDB.getInstance().getConnection();
+            SnmpDAO dao = new SnmpDAO(con);
+            dao.updateSnmpDevice(snmp);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            con.close();
+        }
+    }
 }
